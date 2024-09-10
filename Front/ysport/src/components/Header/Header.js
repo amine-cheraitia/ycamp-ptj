@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import './HomePage.css';
+import './Header.css';
 
 // Importation dans le fichier du composant (par exemple App.js)
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,21 +14,20 @@ function Search() {
     navigate('/search');  // Redirige vers la page About
   };
 
-  const returnHome = () => {
-    navigate('/');  // Redirige vers la page d'accueil
-  };
-
   return (
 
       <header className="App-header">
+<div className='left'>
+        <a className='logo' href="/">
+            <FontAwesomeIcon icon={faFutbol} /> &nbsp; FranceTerrainsSport
+        </a>
+</div>
+        <div className='right'>
+        
 
-        <button onClick={returnHome}>
-            <FontAwesomeIcon icon={faFutbol} />
-        </button>
-      
-        FranceTerrainsSport
-
-        <button onClick={handleClick}>Aller à la page À propos</button>
+        <button onClick={handleClick}>Accueil</button>
+        <button onClick={handleClick}>Contact</button>
+        </div>
       </header>
 
   );

@@ -1,48 +1,129 @@
 .App {
-    text-align: center;
-  }
+  text-align: center;
+}
+
+.App-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #1C4D85;
+  min-height: calc(100vh - 120px);
+  background-image: url('../public/Parc-De-Paris9.jpg');
+  background-size: cover; /* L'image couvrira toute la surface */
+  background-position: center; /* Centrer l'image */
+  background-repeat: no-repeat;
+  /* transparence de l'image de fond */
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.App-main::before{
+  content: "";
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+.description {
+  width: 50%;
+  font-size: 16px;
+  z-index: 1;
+}
+
+.left-image {
+      /* background-image: url(http://localhost:3000/static/media/femme-sportif-qui-court.7a78bca….png); */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      flex: 1;
+      height: calc(100vh - 120px);
   
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
-  }
-  
-  .App-header, .App-footer {
-    background-color: #282c34;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  .App-main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: black;
-    min-height: calc(100vh - 200px);
-  }
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
+
+}
+
+.left-image img {
+  width: 100%;
+  height: calc(100vh - 120px);
+  position: relative;
+  object-fit: cover;
+  z-index: 2;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-image: url('../public/femme-sportif-qui-court.png'); */
+}
+
+.right-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  z-index: 1;
+  flex: 1;
+}
+h1 {
+  font-size: 28px;
+  z-index: 1;
+  margin: inherit;
+}
+
+a {
+  color: #0077cc; /* Couleur plus sombre pour une meilleure lisibilité sur fond blanc */
+  text-decoration: none;
+  font-weight: bold; /* Rend le lien plus visible */
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  color: #005fa3; /* Couleur légèrement plus foncée au survol */
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Légère ombre pour souligner l'interaction */
+}
+
+a:focus,
+a:active {
+  color: #003d6b; /* Couleur encore plus sombre pour indiquer le focus ou le clic */
+  outline: none; /* Supprime la bordure par défaut lors du focus */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre plus marquée pour l'interaction */
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  z-index: 1;
+}
+
+.search-bar input,
+.search-bar button {
+  height: 40px; /* Même hauteur pour les deux éléments */
+  border: none;
+  padding: 0 20px; /* Ajustement du padding pour une meilleure apparence */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.search-bar input {
+  border-radius: 15px 0px 0px 15px; /* Coins arrondis à gauche */
+  background-color: #f0f0f0; /* Couleur de fond */
+  color: #282c34;
+  flex-grow: 1; /* Permet à l'input de prendre tout l'espace disponible */
+}
+
+.search-bar button {
+  border-radius: 0px 15px 15px 0px; /* Coins arrondis à droite */
+  background-color: #61dafb;
+  color: #282c34;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #21a1f1; /* Changement de couleur au survol */
+}

@@ -1,7 +1,7 @@
 
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import Search from './Header';
+import Search from './Search';
 
 function App() {
   return (
