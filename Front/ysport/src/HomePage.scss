@@ -9,7 +9,7 @@
     font-size: calc(10px + 2vmin);
     color: #1c4d85;
     min-height: calc(100vh - 120px);
-    background-image: url("../public/mountain-6253669_1280.jpg");
+    background-image: url("../public/mountain-6253669_1280.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -90,22 +90,25 @@
         }
 
         button {
-          height: 40px;
+          height: 75%;
           border: none;
           padding: 0 20px;
           font-size: 16px;
           display: flex;
           align-items: center;
           box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-          transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+          transition:
+            background-color 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.3s ease;
           border-radius: 30px;
-          background-color: #E0F7FF;
+          background-color: #e0f7ff;
           color: #282c34;
           cursor: pointer;
           flex: 1;
 
           &:hover {
-            background-color:#61dafb;
+            background-color: #61dafb;
           }
         }
       }

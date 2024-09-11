@@ -1,21 +1,15 @@
+import "./HomePage.scss";
 
-import './HomePage.scss';
-
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function Search() {
-
-
   return (
-
     <div className="App">
-      <Header/>
+      <Header />
       <main className="App-main">
-        <p>
-          Search
-        </p>
-        </main>
+        <p>Search</p>
+      </main>
       <Footer />
     </div>
   );

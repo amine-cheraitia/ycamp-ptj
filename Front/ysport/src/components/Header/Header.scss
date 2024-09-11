@@ -19,7 +19,9 @@
       display: flex;
       align-items: center;
       font-size: 24px;
-      transition: color 0.3s ease, transform 0.3s ease;
+      transition:
+        color 0.3s ease,
+        transform 0.3s ease;
       cursor: pointer;
       font-weight: bold;
 
@@ -60,7 +62,10 @@
       align-items: center;
       background-color: transparent;
       color: #1c4d85;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
       cursor: pointer;
 
       &:hover {

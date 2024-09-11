@@ -7,9 +7,10 @@ function Search() {
         <p>© 2024 FranceTerrainsDeSport. Tous droits réservés.</p>
       </div>
       <div className="right">
-        <p>Politique de Confidentialité</p>
-        <p>Conditions d'Utilisation </p>
-        <p>À Propos</p>
+        <p>
+          Projet réalisé par Amine, Maximilien, Pauline, Quentin et Sara dans le
+          cadre de Ynov Campus – YCamp.
+        </p>
       </div>
     </footer>
   );

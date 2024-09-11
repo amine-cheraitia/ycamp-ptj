@@ -1,7 +1,6 @@
-
-import { Routes, Route } from 'react-router-dom';
-import HomePage from './HomePage';
-import Search from './Search';
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./HomePage";
+import Search from "./Search";
 
 function App() {
   return (
