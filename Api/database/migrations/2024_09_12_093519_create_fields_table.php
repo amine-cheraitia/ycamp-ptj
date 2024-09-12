@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
+            $table->string("place_name");
             $table->boolean("lighting");
-            $table->string("obeservation1");
-            $table->string("obeservation2");
+            $table->string("observation_1");
+            $table->string("observation_2");
             $table->boolean("transport_acces");
             $table->boolean("disabled_acces");
             $table->boolean("sanitary");
             $table->float("shower");
-            $table->string("website");
+            $table->string("web_link");
             $table->string("ground_type");
             $table->timestamps();
         });
