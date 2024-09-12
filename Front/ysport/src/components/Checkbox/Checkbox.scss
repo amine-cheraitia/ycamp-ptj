@@ -1,0 +1,44 @@
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 5px;
+    cursor: pointer;
+  
+    input {
+      display: none; // Cache l'input visuellement, mais il reste cliquable.
+    }
+  
+    .checkmark {
+      width: 15px;
+      height: 15px;
+      border: 1px solid rgba(30, 30, 30, 0.25);
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+
+      //over the checkmark
+      &:hover {
+        background-color: rgba(30, 30, 30, 0.1);
+      }
+  
+      &:after {
+        content: "✔";
+    display: none;
+    width: 14px;
+    position: absolute;
+    height: 14px;
+    top: 0;
+
+    border-radius: 3px;
+      }
+    }
+  
+    input:checked + .checkmark:after {
+      display: block; // Affiche la coche lorsqu'on coche l'input.
+    }
+  }
+  

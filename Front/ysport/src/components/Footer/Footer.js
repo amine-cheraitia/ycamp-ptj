@@ -1,6 +1,6 @@
 import "./Footer.scss";
 
-function Search() {
+function Footer() {
   return (
     <footer className="App-footer">
       <div className="left">
@@ -16,4 +16,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default Footer;

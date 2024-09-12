@@ -4,7 +4,7 @@ import "./Header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFutbol } from "@fortawesome/free-solid-svg-icons";
 
-function Search() {
+function Header() {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -26,4 +26,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default Header;
