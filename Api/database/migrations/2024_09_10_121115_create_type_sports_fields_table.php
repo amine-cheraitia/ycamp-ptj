@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('type_sports_fields', function (Blueprint $table) {
             $table->id();
-            $table->string("type_of_sport_field", 255);
+            $table->string("description", 255);
             $table->timestamps();
         });
     }

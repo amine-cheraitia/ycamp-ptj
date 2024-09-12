@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->boolean("lighting");
+            $table->string("obeservation1");
+            $table->string("obeservation2");
+            $table->boolean("transport_acces");
+            $table->boolean("disabled_acces");
+            $table->boolean("sanitary");
+            $table->float("shower");
+            $table->string("website");
+            $table->string("ground_type");
+            $table->timestamps();
         });
     }
 
