@@ -1,4 +1,5 @@
 import "./HomePage.scss";
+import { useNavigate } from "react-router-dom";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -31,6 +32,12 @@ function HomePage() {
       document.querySelector(".search-bar").classList.remove("disable");
       document.querySelector(".type2").classList.remove("active");
     }
+  };
+
+  const navigate = useNavigate();
+
+  const resultPage = () => {
+    navigate("/result");
   };
 
   return (
@@ -70,10 +77,10 @@ function HomePage() {
             <div className="modal2 hidden">
               <div className="modal-content">
                 <input type="text" placeholder="Rechercher une ville" />
-                
+
               </div>
             </div>
-            <button type="submit">Rechercher</button>
+            <button type="submit" onClick={resultPage}>Rechercher</button>
           </form>
           <p className="description">
             Trouvez facilement des complexes sportifs en France avec FranceTerrainsSport. Que ce soit un terrain de foot, une salle de sport ou un court de

@@ -77,10 +77,11 @@
         gap: 5px;
 
         &.disable {
-          background-color: #C7C7C7;
+          background-color: #c7c7c7;
         }
 
-        .type, .type2 {
+        .type,
+        .type2 {
           flex: 1;
           cursor: pointer;
           border-radius: 50px;
@@ -101,11 +102,10 @@
           &:hover {
             background-color: rgba(30, 30, 30, 0.1);
           }
-
-          
         }
 
-        .modal, .modal2 {
+        .modal,
+        .modal2 {
           position: absolute;
           top: 70px;
           left: 0;
@@ -124,10 +124,16 @@
             border-radius: 25px;
             padding: 20px 10px;
             display: flex;
-            justify-content: space-between  ;
+            justify-content: space-between;
             width: 450px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
+            input {
+              border: none;
+              height: 34px;
+              width: 100%;
+              text-align: center;
+            }
             .modal-header {
               display: flex;
               justify-content: space-between;

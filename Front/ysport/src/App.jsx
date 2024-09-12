@@ -1,13 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./HomePage";
-import Search from "./Search";
+import ResultPage from "./ResultPage";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/result" element={<ResultPage />} />
+        <Route path="/footer" element={<Footer />} />
       </Routes>
     </div>
   );
