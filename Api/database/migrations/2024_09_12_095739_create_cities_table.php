@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string("city_name");
+            $table->string('zip_code');
             $table->timestamps();
+
+            $table->string('departement_id');
+            $table->foreign('departement_id')->references('id')->on('departements');
         });
     }
 

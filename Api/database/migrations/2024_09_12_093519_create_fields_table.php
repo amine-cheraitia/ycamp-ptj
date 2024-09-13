@@ -14,15 +14,21 @@ return new class extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->string("place_name");
-            $table->boolean("lighting");
             $table->string("observation_1");
             $table->string("observation_2");
+            $table->string("ground_type");
+            $table->boolean("lighting");
             $table->boolean("transport_acces");
             $table->boolean("disabled_acces");
             $table->boolean("sanitary");
             $table->float("shower");
             $table->string("web_link");
-            $table->string("ground_type");
+
+            $table->string('adresse_id');
+            $table->foreign('adresse_id')->references('id')->on('adresses');
+
+            $table->unsignedBigInteger('type_sports_field_id');
+            $table->foreign('type_sports_field_id')->references('id')->on('type_sports_fields');
             $table->timestamps();
         });
     }
