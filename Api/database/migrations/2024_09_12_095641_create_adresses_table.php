@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string("id")->primary();
             $table->string("adress");
             $table->string("coordinate");
-            $table->float("longitude");
-            $table->float("latitude");
+            $table->string("longitude");
+            $table->string("latitude");
             $table->timestamps();
 
             $table->unsignedBigInteger('city_id');
