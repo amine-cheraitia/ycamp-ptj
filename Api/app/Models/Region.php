@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Region extends Model
 {
     use HasFactory;
+    protected $fillable = ['id', 'region_name'];
 
     public function departements(): HasMany
     {
