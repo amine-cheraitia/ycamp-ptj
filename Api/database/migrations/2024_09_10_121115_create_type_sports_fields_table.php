@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('type_sports_fields', function (Blueprint $table) {
-            $table->id();
-            $table->string("description", 255);
+            $table->unsignedInteger('id')->primary();
+            $table->string("type_of_sport_field", 255);
             $table->timestamps();
         });
     }

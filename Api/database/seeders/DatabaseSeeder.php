@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);*/
         $this->call(RegionSeeder::class);
+        $this->call(TypeSportsFieldSeeder::class);
     }
 }
