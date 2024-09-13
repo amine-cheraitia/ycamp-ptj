@@ -76,11 +76,79 @@ function HomePage() {
 
             <div className="modal2 hidden">
               <div className="modal-content">
-                <input type="text" placeholder="Rechercher une ville" />
+                <input type="text" placeholder="Rechercher une ville, une région..." />
+                <div className="ListeDeroulante">
+                  <div className="ListeDeroulanteContent">
+                    <div className="ListeDeroulanteItem">
+                      <p>Paris</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Lyon</p>
+                      <div className="spaceLine"></div>
+                    </div>
 
+                    <div className="ListeDeroulanteItem">
+                      <p>Marseille</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Lille</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Bordeaux</p>
+                      <div className="spaceLine"></div>
+                    </div>
+
+                    <div className="ListeDeroulanteItem">
+                      <p>Paris</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Lyon</p>
+                      <div className="spaceLine"></div>
+                    </div>
+
+                    <div className="ListeDeroulanteItem">
+                      <p>Marseille</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Lille</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Bordeaux</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Paris</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Lyon</p>
+                      <div className="spaceLine"></div>
+                    </div>
+
+                    <div className="ListeDeroulanteItem">
+                      <p>Marseille</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Lille</p>
+                      <div className="spaceLine"></div>
+                    </div>
+                    <div className="ListeDeroulanteItem">
+                      <p>Bordeaux</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <button type="submit" onClick={resultPage}>Rechercher</button>
+            <button type="submit" onClick={resultPage}>
+              Rechercher
+            </button>
           </form>
           <p className="description">
             Trouvez facilement des complexes sportifs en France avec FranceTerrainsSport. Que ce soit un terrain de foot, une salle de sport ou un court de
