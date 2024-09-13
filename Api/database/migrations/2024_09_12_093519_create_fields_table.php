@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->string("place_name");
-            $table->string("observation_1");
-            $table->string("observation_2");
-            $table->string("ground_type");
-            $table->boolean("lighting");
-            $table->boolean("transport_acces");
-            $table->boolean("disabled_acces");
-            $table->boolean("sanitary");
-            $table->float("shower");
-            $table->string("web_link");
+            $table->string("place_name")->nullable();;
+            $table->text("observation_1")->nullable();;
+            $table->text("observation_2")->nullable();;
+            $table->string("ground_type")->nullable();;
+            $table->boolean("lighting")->nullable();;
+            $table->boolean("transport_acces")->nullable();;
+            $table->boolean("disabled_acces")->nullable();;
+            $table->boolean("sanitary")->nullable();;
+            $table->float("shower")->nullable();;
+            $table->string("web_link")->nullable();;
 
             $table->string('adresse_id');
             $table->foreign('adresse_id')->references('id')->on('adresses');
