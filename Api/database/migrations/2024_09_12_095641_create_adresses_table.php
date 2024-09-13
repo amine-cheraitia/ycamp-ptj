@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('adresses', function (Blueprint $table) {
-            $table->id();
+            $table->string("id")->primary();
+            $table->string("adress");
+            $table->string("coordinate");
+            $table->string("longitude");
+            $table->string("latitude");
             $table->timestamps();
+
+            $table->unsignedBigInteger('city_id');
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 
