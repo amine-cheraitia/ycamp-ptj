@@ -1,7 +1,7 @@
-import "./ResultPage.scss";
+import "../styles/ResultPage.scss";
 
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 function ResultPage() {
   return (

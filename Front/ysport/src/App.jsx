@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./HomePage";
-import ResultPage from "./ResultPage";
+import HomePage from "./views/HomePage";
+import ResultPage from "./views/ResultPage";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App"> 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/result" element={<ResultPage />} />

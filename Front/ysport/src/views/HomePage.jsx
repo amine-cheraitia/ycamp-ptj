@@ -1,9 +1,10 @@
-import "./HomePage.scss";
+import "../styles/HomePage.scss";
 import { useNavigate } from "react-router-dom";
 
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import Checkbox from "./components/Checkbox/Checkbox";
+import Header from "../components/Header/Header";
+import Button from "../components/Button/Button";
+import Footer from "../components/Footer/Footer";
+import Checkbox from "../components/Checkbox/Checkbox";
 
 function HomePage() {
   const openModal = () => {
@@ -146,9 +147,7 @@ function HomePage() {
                 </div>
               </div>
             </div>
-            <button type="submit" onClick={resultPage}>
-              Rechercher
-            </button>
+            <Button action={resultPage} text={"Rechercher"} />
           </form>
           <p className="description">
             Trouvez facilement des complexes sportifs en France avec FranceTerrainsSport. Que ce soit un terrain de foot, une salle de sport ou un court de
