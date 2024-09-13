@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string("department_name");
             $table->timestamps();
-            $table->unsignedBigInteger('region_id');
+            $table->unsignedInteger('region_id');
             $table->foreign('region_id')->references('id')->on('regions');
         });
     }

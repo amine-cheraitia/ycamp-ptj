@@ -10,8 +10,10 @@ class Department extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['department_name', 'region_id'];
+
     public function region()
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(Region::class, 'region_id');
     }
 }
