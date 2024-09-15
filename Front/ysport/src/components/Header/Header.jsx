@@ -11,16 +11,20 @@ function Header() {
     navigate("/");
   };
 
+  const handleContact = () => {
+    navigate("/contact");
+  };
+
   return (
     <header className="App-header">
       <div className="left">
         <div className="logo" onClick={handleClick}>
-          <FontAwesomeIcon icon={faFutbol} /> &nbsp; FranceTerrainsSport
+          <FontAwesomeIcon icon={faFutbol} /> &nbsp; Proxima Sport
         </div>
       </div>
       <div className="right">
         <button onClick={handleClick}>Accueil</button>
-        <button onClick={handleClick}>Contact</button>
+        <button onClick={handleContact}>Contact</button>
       </div>
     </header>
   );

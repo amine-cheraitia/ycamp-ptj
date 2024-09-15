@@ -1,5 +1,6 @@
 import "../styles/HomePage.scss";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
@@ -38,8 +39,42 @@ function HomePage() {
   const navigate = useNavigate();
 
   const resultPage = () => {
-    navigate("/result");
+    const id = 123; // ID unique
+    const ids = [1, 2, 3, 4]; // Exemple d'un tableau d'IDs
+    navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
+
+  // récupérer la liste des terrains de sport à partir du json result_for_front_dev_test.json du dossier public
+  let [terrains, setTerrains] = useState([]);
+  useEffect(() => {
+    fetch("/result_for_front_dev_test.json")
+      .then((response) => response.json())
+      .then((data) =>
+        setTerrains(
+          // nettoyer les terrains de sport pour retirer les doublons
+          data.type_of_sport_field,
+        ),
+      );
+  }, []);
+
+  // console.log(terrains);
+
+  const terrainUnique = {};
+
+  // retirer les doublons
+  Object.keys(terrains).forEach((key) => {
+    // console.log(key, terrains[key]);
+    // si le terrain n'est pas déjà dans le tableau
+    if (!terrainUnique[terrains[key]]) {
+      // ajouter le terrain au tableau
+      terrainUnique[terrains[key]] = terrains[key];
+    }
+  });
+
+  console.log(Object.keys(terrains).length);
+
+  // la longueur du tableau
+  console.log(Object.keys(terrainUnique).length);
 
   return (
     <div className="App">
@@ -49,7 +84,7 @@ function HomePage() {
           <img src="/femme-sportif-qui-court.webp" alt="Terrain de foot" />
         </div>
         <div className="right-description">
-          <h1>Bienvenue sur FranceTerrainsSport !</h1>
+          <h1>Bienvenue sur Proxima Sport !</h1>
           <form className="search-bar">
             <div className="type" onClick={openModal}>
               <img src="/perso_running.png" height={"24px"} alt="Sport" />
@@ -58,14 +93,12 @@ function HomePage() {
             <div className="modal hidden">
               <div className="modal-content">
                 <div className="col1">
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <Checkbox key={i} />
-                  ))}
-                </div>
-                <div className="col2">
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <Checkbox key={i} />
-                  ))}
+                  {
+                    // afficher les terrains de sport
+                    Object.keys(terrainUnique).map((key, index) => (
+                      <Checkbox key={index} label={terrainUnique[key]} />
+                    ))
+                  }
                 </div>
               </div>
             </div>
@@ -76,8 +109,11 @@ function HomePage() {
             </div>
 
             <div className="modal2 hidden">
-              <div className="modal-content">
-                <input type="text" placeholder="Rechercher une ville, une région..." />
+              <div className="modal2-content">
+                <input
+                  type="text"
+                  placeholder="Rechercher une ville, une région..."
+                />
                 <div className="ListeDeroulante">
                   <div className="ListeDeroulanteContent">
                     <div className="ListeDeroulanteItem">
@@ -150,8 +186,11 @@ function HomePage() {
             <Button action={resultPage} text={"Rechercher"} />
           </form>
           <p className="description">
-            Trouvez facilement des complexes sportifs en France avec FranceTerrainsSport. Que ce soit un terrain de foot, une salle de sport ou un court de
-            tennis, localisez rapidement l’endroit idéal pour vos activités préférées grâce à notre interface simple et des infos à jour.
+            Trouvez facilement des complexes sportifs en France avec
+            FranceTerrainsSport. Que ce soit un terrain de foot, une salle de
+            sport ou un court de tennis, localisez rapidement l’endroit idéal
+            pour vos activités préférées grâce à notre interface simple et des
+            infos à jour.
           </p>
         </div>
       </main>

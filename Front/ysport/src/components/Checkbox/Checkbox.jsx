@@ -1,11 +1,12 @@
 import "./Checkbox.scss";
 
-function Checkbox() {
+function Checkbox(props) {
+  const label = props.label;
   return (
     <label className="checkbox">
       <input type="checkbox" />
       <span className="checkmark"></span>
-      <p>Some text in the Modal..</p>
+      <p>{label}</p>
     </label>
   );
 }

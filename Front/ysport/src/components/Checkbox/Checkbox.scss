@@ -38,6 +38,13 @@
     }
   }
 
+  p {
+    text-overflow: ellipsis;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   input:checked + .checkmark:after {
     display: block; // Affiche la coche lorsqu'on coche l'input.
   }
