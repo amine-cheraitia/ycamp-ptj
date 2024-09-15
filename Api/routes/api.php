@@ -2,11 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\RegionController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/locations', function (Request $request) {
-    return ('hello');
-});
+Route::get('/locations', [RegionController::class, 'locations']);
+
+Route::get('/fieldslist', [FieldController::class, 'fieldslist']);

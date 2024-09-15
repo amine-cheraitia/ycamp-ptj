@@ -22,4 +22,9 @@ class Adresse extends Model
     {
         return $this->hasMany(Field::class);
     }
+
+    public function region()
+    {
+        return $this->hasOneThrough(Region::class, City::class, 'id', 'id', 'city_id', 'department_id');
+    }
 }
