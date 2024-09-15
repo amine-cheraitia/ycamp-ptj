@@ -175,7 +175,7 @@
               }
 
               &::-webkit-scrollbar-thumb {
-                background-color: rgba(#1c4d85, 0.75);
+                background-color: rgba(#FF9933, 0.75);
                 border-radius: 10px;
               }
 
@@ -187,7 +187,7 @@
 
               // hover sur la scrollbar
               &::-webkit-scrollbar-thumb:hover {
-                background-color: #1c4d85;
+                background-color: #FF9933;
               }
             }
 
