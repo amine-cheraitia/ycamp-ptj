@@ -7,6 +7,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   font-size: 14px;
+  color: #3B3B3B;
+}
+
+button {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  font-size: 14px;
+  color: #3B3B3B;
 }
 
 p {
@@ -22,7 +34,7 @@ code {
   text-align: center;
 
   .App-main {
-    background-image: url("../public/mountain-6253669_1280.webp");
+    background-image: url("/mountain-6253669_1280.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

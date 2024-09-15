@@ -6,8 +6,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: #1c4d85;
+    // font-size: calc(10px + 2vmin);
+    // color: #1c4d85;
     min-height: calc(100vh - 120px);
 
     &::before {
@@ -84,7 +84,14 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 34px;
+          height: 75%;
+
+          svg {
+            margin-right: 5px;
+            // size
+            height: 20px;
+            color: #FF9933;
+          }
 
           .label {
             font-size: 14px;
@@ -225,13 +232,13 @@
             box-shadow 0.3s ease,
             transform 0.3s ease;
           border-radius: 30px;
-          background-color: #e0f7ff;
+          background-color: #FF9933;
           color: #282c34;
           cursor: pointer;
           flex: 1;
 
           &:hover {
-            background-color: #61dafb;
+            background-color: #CC3300;
           }
         }
       }

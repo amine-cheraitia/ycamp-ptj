@@ -1,6 +1,8 @@
 import "../styles/HomePage.scss";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonRunning, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
@@ -87,7 +89,7 @@ function HomePage() {
           <h1>Bienvenue sur Proxima Sport !</h1>
           <form className="search-bar">
             <div className="type" onClick={openModal}>
-              <img src="/perso_running.png" height={"24px"} alt="Sport" />
+              <FontAwesomeIcon icon={faPersonRunning} />
               <p className="label">Type de terrain</p>
             </div>
             <div className="modal hidden">
@@ -104,7 +106,7 @@ function HomePage() {
             </div>
             <div className="separator"></div>
             <div className="type2" onClick={openModal2}>
-              <img src="/marker.png" height={"24px"} alt="Marker" />
+              <FontAwesomeIcon icon={faLocationDot} />
               <p className="label">Ville</p>
             </div>
 
