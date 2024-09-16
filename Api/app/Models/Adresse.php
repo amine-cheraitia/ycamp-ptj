@@ -20,7 +20,7 @@ class Adresse extends Model
 
     public function fields()
     {
-        return $this->hasMany(Field::class);
+        return $this->hasMany(Field::class, 'adresse_id');
     }
 
     public function region()

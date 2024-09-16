@@ -52,7 +52,7 @@ class FieldSeeder extends Seeder
                     'sanitary' => filter_var($record['sanitary'], FILTER_VALIDATE_BOOLEAN), // Sanitaires
                     'shower' => filter_var($record['shower'], FILTER_VALIDATE_BOOLEAN), // Douches
                     'web_link' => $record['web_link'], // Lien web
-                    'adresse_id' => $address->id, // ID de l'adresse correspondante
+                    'adresse_id' => $record['id_place'], // ID de l'adresse correspondante
                     'type_sports_field_id' => $typeSportsField->id, // ID du type de terrain de sport correspondant
                 ]);
             } else {

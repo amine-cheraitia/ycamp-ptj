@@ -46,7 +46,7 @@ class RegionController extends Controller
         return response()->json($formattedRegions);
     }
 
-    public function FunctionName()
+    public function random()
     {
         $adresses = Field::with('adresse.city.department.region')->paginate(50);
         $regions = Region::with('departments')->get();

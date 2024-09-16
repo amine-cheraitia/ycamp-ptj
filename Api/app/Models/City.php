@@ -20,6 +20,6 @@ class City extends Model
 
     public function addresses()
     {
-        return $this->hasMany(Adresse::class);
+        return $this->hasMany(Adresse::class, 'city_id');
     }
 }

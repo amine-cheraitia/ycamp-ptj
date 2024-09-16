@@ -12,13 +12,13 @@ class Field extends Model
 {
     use HasFactory;
 
-    public function adresse()
+    public function address()
     {
-        return $this->belongsTo(Adresse::class);
+        return $this->belongsTo(Adresse::class, 'adresse_id');
     }
 
-    public function typeOfSportsField()
+    public function type()
     {
-        return $this->belongsTo(TypeSportsField::class);
+        return $this->belongsTo(TypeSportsField::class, 'type_sports_field_id');
     }
 }
