@@ -49,7 +49,7 @@ function HomePage() {
   // récupérer la liste des terrains de sport à partir du json result_for_front_dev_test.json du dossier public
   let [terrains, setTerrains] = useState([]);
   useEffect(() => {
-    fetch("/result_for_front_dev_test.json")
+    fetch("/Json/result_for_front_dev_test.json")
       .then((response) => response.json())
       .then((data) =>
         
@@ -84,7 +84,7 @@ function HomePage() {
       <Header />
       <main className="App-main">
         <div className="left-image">
-          <img src="/femme_sportif_orange.png" alt="Femme qui court" />
+          <img src="/Img/femme_sportif_orange.png" alt="Femme qui court" />
         </div>
         <div className="right-description">
           <h1>Bienvenue sur Proxima Sport !</h1>

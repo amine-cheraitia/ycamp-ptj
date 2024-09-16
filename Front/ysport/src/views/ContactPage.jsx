@@ -32,7 +32,7 @@ function ContactPage(props) {
             {/* <PhotoGallery /> */}
 
             <img
-              src="/Parc-De-Paris9.jpg"
+              src="/Img/Parc-De-Paris9.jpg"
               alt="Person running"
               style={{ width: "400px", height: "400px", objectFit: "cover", margin: "5px", borderRadius: "8px" }}
             />
