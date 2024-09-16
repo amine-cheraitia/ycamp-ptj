@@ -52,6 +52,7 @@ function HomePage() {
     fetch("/result_for_front_dev_test.json")
       .then((response) => response.json())
       .then((data) =>
+        
         setTerrains(
           // nettoyer les terrains de sport pour retirer les doublons
           data.type_of_sport_field,
@@ -83,7 +84,7 @@ function HomePage() {
       <Header />
       <main className="App-main">
         <div className="left-image">
-          <img src="/femme-sportif-qui-court.webp" alt="Terrain de foot" />
+          <img src="/femme_sportif_orange.png" alt="Femme qui court" />
         </div>
         <div className="right-description">
           <h1>Bienvenue sur Proxima Sport !</h1>

@@ -9,7 +9,7 @@
   // color: #1c4d85;
   padding: 0px 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 5;
   position: relative;
 
   .left {
@@ -61,13 +61,13 @@
       cursor: pointer;
 
       &:hover {
-        background-color: #e0f7ff;
+        background-color: rgba(255, 153, 51, 0.75);
         box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
         transform: translateY(-2px);
       }
 
       &:active {
-        background-color: #e0f7ff;
+        background-color: rgba(255, 153, 51, 0.75);
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
         transform: translateY(0px);
       }

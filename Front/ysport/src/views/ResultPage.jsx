@@ -1,8 +1,11 @@
 import "../styles/ResultPage.scss";
 import { useParams, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import Thumbnail from "../components/Thumbnail/Thumbnail";
 
 function ResultPage(props) {
   const { id, ids } = useParams(); // Récupère les paramètres de l'URL
@@ -15,15 +18,74 @@ function ResultPage(props) {
     navigate(`/detail/${id}`);
   };
 
+  const activeFilter = (icon) => {
+    console.log(icon);
+
+    if (document.querySelector(`.${icon}`).classList.contains("active")) {
+      document.querySelector(`.${icon}`).classList.remove("active");
+      return;
+    } else {
+      document.querySelector(`.${icon}`).classList.add("active");
+    }
+  };
+
   return (
     <div className="App">
       <Header />
-      <main className="App-main">
+      <main className="App-main col">
+        <div className="header">
+          <div className="search-bar">
+            <div className="type">
+              <FontAwesomeIcon icon={faPersonRunning} />
+              <p className="label">Terrain de football</p>
+            </div>
+
+            <div className="separator"></div>
+            <div className="type2">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <p className="label">Saint-Denis</p>
+            </div>
+          </div>
+
+          <div className="filter">
+            <div className="filter-item faBus" onClick={() => activeFilter("faBus")}>
+              <FontAwesomeIcon icon={faBus} />
+              <p>Accès en transport</p>
+            </div>
+            <div className="filter-item faWheelchairMove" onClick={() => activeFilter("faWheelchairMove")}>
+              <FontAwesomeIcon icon={faWheelchairMove} />
+              <p>Accès handicapé</p>
+            </div>
+            <div className="filter-item faShower" onClick={() => activeFilter("faShower")}>
+              <FontAwesomeIcon icon={faShower} />
+              <p>Douches</p>
+            </div>
+            <div className="filter-item faRestroom" onClick={() => activeFilter("faRestroom")}>
+              <FontAwesomeIcon icon={faRestroom} />
+              <p>Sanitaires</p>
+            </div>
+            <div className="filter-item faLightbulb" onClick={() => activeFilter("faLightbulb")}>
+              <FontAwesomeIcon icon={faLightbulb} />
+              <p>Éclairage</p>
+            </div>
+          </div>
+        </div>
         <div className="container">
-          <p>ResultPage</p> &nbsp;
+          {/* <p>ResultPage</p> &nbsp;
           <p>id: {id}</p> &nbsp;
-          <p>ids: {idsArray.join(", ")}</p>
-          <button onClick={detailPage}>Go to Button</button>
+          <p>ids: {idsArray.join(", ")}</p> */}
+
+          <Thumbnail  label="Terrain de foot" />
+          <Thumbnail  label="Terrain de basket" />
+          <Thumbnail  label="Terrain de foot" />
+          <Thumbnail  label="Terrain de basket" />
+
+          <Thumbnail  label="Terrain de foot" />
+          <Thumbnail  label="Terrain de basket" />
+          <Thumbnail  label="Terrain de foot" />
+          <Thumbnail  label="Terrain de basket" />
+
+          {/* <button onClick={detailPage}>Go to Button</button> */}
         </div>
       </main>
       <Footer />
