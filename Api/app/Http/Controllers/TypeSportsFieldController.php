@@ -12,7 +12,8 @@ class TypeSportsFieldController extends Controller
      */
     public function index()
     {
-        //
+        $typeSportsField = TypeSportsField::all();
+        return response()->json(["typeSportsField" => $typeSportsField]);
     }
 
     /**
