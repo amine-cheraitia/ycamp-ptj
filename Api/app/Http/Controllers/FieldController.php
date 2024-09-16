@@ -30,12 +30,12 @@ class FieldController extends Controller
             });
         }
 
-        if ($request->has('type_of_sports_field_id')) {
-            $query->where('type_of_sports_field_id', $request->type_of_sports_field_id);
+        if ($request->has('type_sports_field_id')) {
+            $query->where('type_sports_field_id', $request->type_sports_field_id);
         }
 
-        //$fields = $query->paginate(50);
+        $fields = $query->paginate(50);
 
-        return response()->json($query);
+        return response()->json($fields);
     }
 }

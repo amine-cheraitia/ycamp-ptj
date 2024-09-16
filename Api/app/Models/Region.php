@@ -19,13 +19,13 @@ class Region extends Model
         return $this->hasMany(Department::class);
     }
 
-    public function cities()
+    /*public function cities()
     {
         return $this->hasManyThrough(City::class, Department::class);
     }
 
     public function addresses()
     {
-        return $this->hasManyThrough(Adresse::class, City::class, 'department_id', 'city_id');
-    }
+        return $this->hasManyThrough(Adresse::class, City::class, 'departement_id', 'city_id');
+    }*/
 }

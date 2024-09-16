@@ -11,4 +11,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/locations', [RegionController::class, 'locations']);
 
-Route::get('/fieldslist', [FieldController::class, 'fieldslist']);
+Route::post('/fieldslist', [FieldController::class, 'fieldslist']);
