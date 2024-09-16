@@ -20,3 +20,5 @@ Route::post('/fieldslist', [FieldController::class, 'fieldslist']);
 Route::post("/getFields", [FieldController::class, 'getFields']);
 
 Route::post("/getfield", [FieldController::class, 'getFieldsByTypeAndLocation']);
+
+Route::get('/fieldlist', [FieldController::class, 'getFieldList']);

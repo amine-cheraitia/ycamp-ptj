@@ -108,4 +108,45 @@ class FieldController extends Controller
         // Retourner les résultats sous forme de JSON
         return response()->json($fields);
     }
+
+    public function getFieldList(Request $request)
+    {
+        $typeSportsFieldId = $request->type_sports_field_id;
+        $regionId = $request->region_id;
+        $departmentId = $request->department_id;
+        $cityId = $request->city_id;
+
+        /*         return response()->json([
+            "typeSportsFieldId" => $typeSportsFieldId,
+            "regionId" => $regionId,
+            "departmentId" => $departmentId,
+            "cityId" => $cityId
+        ]); */
+        $query = Field::query();
+
+        if ($typeSportsFieldId) {
+
+            $query->where('type_sports_field_id', $typeSportsFieldId);
+        } else {
+            return response()->json(['random' => $request->type_sports_field_id]);
+        }
+
+        if ($regionId !== null) {
+            $query->whereHas('adresse.city.department.region', function ($q) use ($regionId) {
+                $q->where('id', $regionId);
+            });
+        } elseif ($departmentId !== null) {
+            $query->whereHas('adresse.city.department', function ($q) use ($departmentId) {
+                $q->where('id', $departmentId);
+            });
+        } elseif ($cityId !== null) {
+            $query->whereHas('adresse.city', function ($q) use ($cityId) {
+                $q->where('id', $cityId);
+            });
+        }
+
+        $fields = $query->paginate(8);
+
+        return response()->json($fields);
+    }
 }
