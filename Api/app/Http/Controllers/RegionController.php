@@ -16,12 +16,12 @@ class RegionController extends Controller
         //$regions = Region::all();
         $departments = Department::all();
         $cities = City::all();
-        $adresses = Field::with('adresse.city.department.region')->paginate(50);
+        //$adresses = Field::with('adresse.city.department.region')->paginate(50);
         $regions = Region::with('departments.cities')->get();
-
+        //$regions = Region::all();
         /*return response()->json([
-            //'regions' => $regions,
-            //'cities' => $cities,
+            'departments' => $departments,
+            'cities' => $cities,
             'regions' => $regions
         ]);*/
         $formattedRegions = $regions->map(function ($region) {
