@@ -6,7 +6,7 @@
   cursor: pointer;
 
   input {
-    display: none; // Cache l'input visuellement, mais il reste cliquable.
+    display: none;
   }
 
   .checkmark {
@@ -20,7 +20,6 @@
     cursor: pointer;
     position: relative;
 
-    //over the checkmark
     &:hover {
       background-color: rgba(30, 30, 30, 0.1);
     }
@@ -48,6 +47,6 @@
   }
 
   input:checked + .checkmark:after {
-    display: block; // Affiche la coche lorsqu'on coche l'input.
+    display: block;
   }
 }

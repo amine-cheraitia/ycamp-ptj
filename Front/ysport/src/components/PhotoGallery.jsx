@@ -1,4 +1,3 @@
-// src/components/PhotoGallery.js
 import React, { useState, useEffect } from 'react';
 import { fetchRandomSportPhotos } from '../services/unsplashService';
 

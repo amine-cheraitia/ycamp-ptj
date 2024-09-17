@@ -6,7 +6,7 @@ import Footer from "../components/Footer/Footer";
 import Button from "../components/Button/Button";
 
 function DetailPage(props) {
-  const { id } = useParams(); // Récupère les paramètres de l'URL
+  const { id } = useParams();
 
   const champsDétails = ['Type de terrain', 'Accès en transports', 'Accès handicapé', 'Sanitaires', 'Douches', 'Éclairage', 'Site Web', 'Adresse', 'Département', 'Région', 'Coordonnées GPS', 'Observations'];
 
@@ -42,7 +42,7 @@ function DetailPage(props) {
           <div className="description">
             <div className="header">
                <div className="name">Parc de Paris 9</div>
-               <Button text="Carte" icon={true} />
+               <Button text="Carte" icon={"faLocationDot"} />
 
             </div>
            
