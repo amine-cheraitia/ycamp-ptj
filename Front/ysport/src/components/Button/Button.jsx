@@ -1,18 +1,19 @@
 import "./Button.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function Button(props) {
   const text = props.text;
 
-  // const action = props.action;
-
   const icon = props.icon;
+
+  console.log(icon);
 
   return (
     <button className="button_main_style" onClick={ props.action}>
-      {icon && <FontAwesomeIcon icon={faLocationDot} />}
+      {icon === "faLocationDot" && <FontAwesomeIcon icon={faLocationDot} />}
+      {icon === "faPlus" && <FontAwesomeIcon icon={faPlus} />}
       &nbsp;
       {text}
     </button>

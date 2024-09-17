@@ -41,35 +41,22 @@ function HomePage() {
   const navigate = useNavigate();
 
   const resultPage = () => {
-    const id = 123; // ID unique
-    const ids = [1, 2, 3, 4]; // Exemple d'un tableau d'IDs
+    const id = 123;
+    const ids = [1, 2, 3, 4];
     navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
 
-  // récupérer la liste des terrains de sport à partir du json result_for_front_dev_test.json du dossier public
   let [terrains, setTerrains] = useState([]);
   useEffect(() => {
     fetch("/Json/result_for_front_dev_test.json")
       .then((response) => response.json())
-      .then((data) =>
-        
-        setTerrains(
-          // nettoyer les terrains de sport pour retirer les doublons
-          data.type_of_sport_field,
-        ),
-      );
+      .then((data) => setTerrains(data.type_of_sport_field));
   }, []);
-
-  // console.log(terrains);
 
   const terrainUnique = {};
 
-  // retirer les doublons
   Object.keys(terrains).forEach((key) => {
-    // console.log(key, terrains[key]);
-    // si le terrain n'est pas déjà dans le tableau
     if (!terrainUnique[terrains[key]]) {
-      // ajouter le terrain au tableau
       terrainUnique[terrains[key]] = terrains[key];
     }
   });
@@ -94,33 +81,19 @@ function HomePage() {
 
   const [filteredVilles, setFilteredVilles] = useState(Object.keys(villes));
 
- console.log("filter", filteredVilles);
-
-
-
+  console.log("filter", filteredVilles);
 
   const searchLoc = (e) => {
     console.log(e.target.value);
 
-    // villesArray = Object.keys(villes).filter((ville) => {
-    //   return ville.toLowerCase().includes(e.target.value.toLowerCase());
-    // });
-
-    // console.log(villesArray);
-
     setFilteredVilles(
       Object.keys(villes).filter((ville) => {
-        // commence par
         return ville.toLowerCase().startsWith(e.target.value.toLowerCase());
-      }),
+      })
     );
 
     console.log(filteredVilles);
-
-    // afficher les villes filtrées
-
-
-  }
+  };
 
   return (
     <div className="App">
@@ -139,12 +112,9 @@ function HomePage() {
             <div className="modal hidden">
               <div className="modal-content">
                 <div className="col1">
-                  {
-                    // afficher les terrains de sport
-                    Object.keys(terrainUnique).map((key, index) => (
-                      <Checkbox key={index} label={terrainUnique[key]} />
-                    ))
-                  }
+                  {Object.keys(terrainUnique).map((key, index) => (
+                    <Checkbox key={index} label={terrainUnique[key]} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -156,28 +126,15 @@ function HomePage() {
 
             <div className="modal2 hidden">
               <div className="modal2-content">
-                <input
-                  type="text"
-                  onChange={(e) =>searchLoc(e)}
-                  placeholder="Rechercher une ville, une région..."
-                />
+                <input type="text" onChange={(e) => searchLoc(e)} placeholder="Rechercher une ville, une région..." />
                 <div className="ListeDeroulante">
                   <div className="ListeDeroulanteContent">
-
-                    {
-                      // afficher les villes de filtrées
-                      filteredVilles.map((ville, index) => (
-                        <div className="ListeDeroulanteItem" key={index}>
-                          <p>{ville}</p>
-                          {
-                            index !== filteredVilles.length - 1 && <div className="spaceLine"></div>
-                          }
-                          
-                        </div>
-                      ))
-                      
-                    }
-                    
+                    {filteredVilles.map((ville, index) => (
+                      <div className="ListeDeroulanteItem" key={index}>
+                        <p>{ville}</p>
+                        {index !== filteredVilles.length - 1 && <div className="spaceLine"></div>}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -185,11 +142,8 @@ function HomePage() {
             <Button action={resultPage} text={"Rechercher"} />
           </form>
           <p className="description">
-            Trouvez facilement des complexes sportifs en France avec
-            FranceTerrainsSport. Que ce soit un terrain de foot, une salle de
-            sport ou un court de tennis, localisez rapidement l’endroit idéal
-            pour vos activités préférées grâce à notre interface simple et des
-            infos à jour.
+            Trouvez facilement des complexes sportifs en France avec FranceTerrainsSport. Que ce soit un terrain de foot, une salle de sport ou un court de
+            tennis, localisez rapidement l’endroit idéal pour vos activités préférées grâce à notre interface simple et des infos à jour.
           </p>
         </div>
       </main>

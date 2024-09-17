@@ -1,6 +1,15 @@
 .button_main_style {
-  background-color: rgba(255, 153, 51, 0.75);
+  
   border-radius: 50px;
+  background-color: rgba(255, 153, 51, 1);
   border: none;
   padding: 5px 10px;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+
+
+  &:hover {
+    background-color: rgba(255, 153, 51, 0.75);
+  }
 }
