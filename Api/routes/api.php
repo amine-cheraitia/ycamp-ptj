@@ -16,10 +16,13 @@ Route::get('/locations', [RegionController::class, 'locations']);
 Route::get('/typesportsfield', [TypeSportsFieldController::class, 'index']);
 
 //call first research
-Route::post('/fieldslist', [FieldController::class, 'fieldslist']);
+Route::get('/fieldslist', [FieldController::class, 'fieldslist']);
 
 Route::post("/getFields", [FieldController::class, 'getFields']);
 
 Route::post("/getfield", [FieldController::class, 'getFieldsByTypeAndLocation']);
 
 Route::get('/fieldlist', [FieldController::class, 'getFieldList']);
+
+//filter
+Route::get('/fieldlist/filter', [FieldController::class, 'getFieldListWithFilter']);
