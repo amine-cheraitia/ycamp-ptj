@@ -1,6 +1,13 @@
 import "./MapWithMarker.scss";
 import React, { useCallback, useState } from "react";
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from "@react-google-maps/api";
+import keyData from '../../../Api_key/key.json';
+
+
+// Recuperer la clé Api
+const my_keyData = keyData.apiKey;
+// console.log(my_keyData)
+
 
 // Style de la carte (dimensions)
 const mapContainerStyle = {
@@ -26,7 +33,7 @@ const MapWithMarker = ({ id_place, place_name, longitude, latitude }) => {
 
   // Charge la carte avec le hook useLoadScript
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAmc1pqL90q8E_DO8GojSiiwuq8tbH5VyI", // Remplace par ta clé API
+    googleMapsApiKey: my_keyData, // Remplace par ta clé API
   });
 
   // Fonction appelée quand on clique sur un marker
