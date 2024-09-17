@@ -13,16 +13,18 @@ RUN docker-php-ext-install \
 # Installation dans votre image de Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Installation dans votre image de NodeJS
-RUN apk add nodejs npm
-
 ENV WEB_DOCUMENT_ROOT /app/public
 ENV APP_ENV local
 WORKDIR /app
-COPY . .
 
-# On copie le fichier .env.example pour le renommer en .env
-# Vous pouvez modifier le .env.example pour indiquer la configuration de votre site pour la production
+# Cloner le dépôt Git a la place de copier le contenu en local (ATTENTION : branche "docker" a modifier plus tard)
+RUN git clone --branch docker https://github.com/amine-cheraitia/ycamp-ptj.git .
+#COPY . .
+
+# Changer le répertoire de travail pour le dossier Api
+WORKDIR /app/Api
+
+# Copier le fichier .env.example pour le renommer en .env
 RUN cp .env.example .env
 
 # Installation et configuration de votre site pour la production
@@ -37,7 +39,7 @@ RUN php artisan route:cache
 # Optimizing View loading
 RUN php artisan view:cache
 
-#CES DEUX LIGNES EMPECHE LA BASE MYSQL DE SE CHARGER
+
 #RUN php artisan migrate --force
 #RUN php artisan db:seed --force
 
