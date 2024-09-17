@@ -74,10 +74,53 @@ function HomePage() {
     }
   });
 
-  console.log(Object.keys(terrains).length);
+  const villes = {
+    Paris: "Paris",
+    Lyon: "Lyon",
+    Marseille: "Marseille",
+    Lille: "Lille",
+    Bordeaux: "Bordeaux",
+    Toulouse: "Toulouse",
+    Nantes: "Nantes",
+    Strasbourg: "Strasbourg",
+    Montpellier: "Montpellier",
+    Rennes: "Rennes",
+    Grenoble: "Grenoble",
+    Nice: "Nice",
+    Toulon: "Toulon",
+    Brest: "Brest",
+    Angers: "Angers",
+  };
 
-  // la longueur du tableau
-  console.log(Object.keys(terrainUnique).length);
+  const [filteredVilles, setFilteredVilles] = useState(Object.keys(villes));
+
+ console.log("filter", filteredVilles);
+
+
+
+
+  const searchLoc = (e) => {
+    console.log(e.target.value);
+
+    // villesArray = Object.keys(villes).filter((ville) => {
+    //   return ville.toLowerCase().includes(e.target.value.toLowerCase());
+    // });
+
+    // console.log(villesArray);
+
+    setFilteredVilles(
+      Object.keys(villes).filter((ville) => {
+        // commence par
+        return ville.toLowerCase().startsWith(e.target.value.toLowerCase());
+      }),
+    );
+
+    console.log(filteredVilles);
+
+    // afficher les villes filtrées
+
+
+  }
 
   return (
     <div className="App">
@@ -115,73 +158,26 @@ function HomePage() {
               <div className="modal2-content">
                 <input
                   type="text"
+                  onChange={(e) =>searchLoc(e)}
                   placeholder="Rechercher une ville, une région..."
                 />
                 <div className="ListeDeroulante">
                   <div className="ListeDeroulanteContent">
-                    <div className="ListeDeroulanteItem">
-                      <p>Paris</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Lyon</p>
-                      <div className="spaceLine"></div>
-                    </div>
 
-                    <div className="ListeDeroulanteItem">
-                      <p>Marseille</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Lille</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Bordeaux</p>
-                      <div className="spaceLine"></div>
-                    </div>
-
-                    <div className="ListeDeroulanteItem">
-                      <p>Paris</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Lyon</p>
-                      <div className="spaceLine"></div>
-                    </div>
-
-                    <div className="ListeDeroulanteItem">
-                      <p>Marseille</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Lille</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Bordeaux</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Paris</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Lyon</p>
-                      <div className="spaceLine"></div>
-                    </div>
-
-                    <div className="ListeDeroulanteItem">
-                      <p>Marseille</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Lille</p>
-                      <div className="spaceLine"></div>
-                    </div>
-                    <div className="ListeDeroulanteItem">
-                      <p>Bordeaux</p>
-                    </div>
+                    {
+                      // afficher les villes de filtrées
+                      filteredVilles.map((ville, index) => (
+                        <div className="ListeDeroulanteItem" key={index}>
+                          <p>{ville}</p>
+                          {
+                            index !== filteredVilles.length - 1 && <div className="spaceLine"></div>
+                          }
+                          
+                        </div>
+                      ))
+                      
+                    }
+                    
                   </div>
                 </div>
               </div>
