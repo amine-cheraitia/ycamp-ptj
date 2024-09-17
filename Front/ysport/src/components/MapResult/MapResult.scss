@@ -1,0 +1,22 @@
+.GoogleMap {
+  position: relative;
+  height: 100%;
+  margin: 0;
+}
+.modal-result-map{
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  // transform:translate();
+  height: 150px;
+  width: 200px;
+  background-color: #F7F7F7;
+  border: silver solid 1px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  &.hidden{
+    display: none;
+  }
+}
+

@@ -4,7 +4,10 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import PhotoGallery from "../components/PhotoGallery";
 
+
+
 function ContactPage(props) {
+
   return (
     <div className="App">
       <Header />
