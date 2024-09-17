@@ -12,8 +12,15 @@ class TypeSportsFieldController extends Controller
      */
     public function index()
     {
-        $typeSportsField = TypeSportsField::all();
-        return response()->json(["typeSportsField" => $typeSportsField]);
+        $typeSportsFields = TypeSportsField::all();
+        $formattedTypeSportsFields = $typeSportsFields->map(function ($typeSportsField) {
+            return [
+                'type_sports_field_id' => $typeSportsField->id,
+                'type_of_sport_field' => $typeSportsField->type_of_sport_field,
+            ];
+        });
+
+        return response()->json($formattedTypeSportsFields);
     }
 
     /**

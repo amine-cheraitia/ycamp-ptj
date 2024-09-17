@@ -125,10 +125,9 @@ class FieldController extends Controller
         $query = Field::query();
 
         if ($typeSportsFieldId) {
-
             $query->where('type_sports_field_id', $typeSportsFieldId);
         } else {
-            return response()->json(['random' => $request->type_sports_field_id]);
+            return response()->json(['error' => "Type de terrain de sport non spécifié."], 400);
         }
 
         if ($regionId !== null) {
@@ -143,6 +142,8 @@ class FieldController extends Controller
             $query->whereHas('adresse.city', function ($q) use ($cityId) {
                 $q->where('id', $cityId);
             });
+        } else {
+            return response()->json(['error' => "la localisation non spécifié."], 400);
         }
 
         $fields = $query->paginate(8);
@@ -161,19 +162,58 @@ class FieldController extends Controller
         $disabledAcces = $request->disabled_acces;
         $sanitary = $request->sanitary;
         $shower = $request->shower; */
-        $lighting = filter_var($request->lighting, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        $transportAcces = filter_var($request->transport_acces, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        $disabledAcces = filter_var($request->disabled_acces, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        $sanitary = filter_var($request->sanitary, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        $shower = filter_var($request->shower, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
-        //return response()->json(['lighting' => $lighting, "transportAcces" => $transportAcces]);
+        /*
+        $lighting = null;
+        $transportAcces = null;
+        $disabledAcces = null;
+        $sanitary = null;
+        $shower = null;
+        $lighting = $request->lighting;
+        $transportAcces = $request->transport_acces;
+        $disabledAcces = $request->disabled_acces;
+        $sanitary = $request->sanitary;
+        $shower = $request->shower;
+*/
+        $typeSportsFieldId = $request->type_sports_field_id;
+        $regionId = $request->region_id;
+        $departmentId = $request->department_id;
+        $cityId = $request->city_id;
+        //
+        /*$lighting = $request->has('lighting') ? $request->lighting : null;
+        $transportAcces = $request->has('transport_acces') ? $request->transport_acces : null;
+        $disabledAcces = $request->has('disabled_acces') ? $request->disabled_acces : null;
+        $sanitary = $request->has('sanitary') ? $request->sanitary : null;
+        $shower = $request->has('shower') ? $request->shower : null;*/
+        $lighting = $request->has('lighting') ? (int) filter_var($request->lighting, FILTER_VALIDATE_BOOLEAN) : null;
+        $transportAcces = $request->has('transport_acces') ? (int) filter_var($request->transport_acces, FILTER_VALIDATE_BOOLEAN) : null;
+        $disabledAcces = $request->has('disabled_acces') ? (int) filter_var($request->disabled_acces, FILTER_VALIDATE_BOOLEAN) : null;
+        $sanitary = $request->has('sanitary') ? (int) filter_var($request->sanitary, FILTER_VALIDATE_BOOLEAN) : null;
+        $shower = $request->has('shower') ? (int) filter_var($request->shower, FILTER_VALIDATE_BOOLEAN) : null;
+
+
+
+
+
+        //
+        //$lighting = filter_var($request->lighting ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        //$transportAcces = filter_var($request->transport_acces ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        //$disabledAcces = filter_var($request->disabled_acces ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        //$sanitary = filter_var($request->sanitary ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        //$shower = filter_var($request->shower ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        /*  return response()->json([
+            "lighting" => $lighting,
+            "transportAcces" => $transportAcces,
+            "disabledAcces" => $disabledAcces,
+            "sanitary" => $sanitary,
+            "shower" => $shower,
+        ]);*/
         $query = Field::query();
 
         if ($typeSportsFieldId) {
             $query->where('type_sports_field_id', $typeSportsFieldId);
         } else {
-            //return response()->json(['random' => $request->type_sports_field_id]);
+            return response()->json(['error' => "Type de terrain de sport non spécifié."], 400);
         }
 
         if ($regionId !== null) {
@@ -188,15 +228,25 @@ class FieldController extends Controller
             $query->whereHas('adresse.city', function ($q) use ($cityId) {
                 $q->where('id', $cityId);
             });
+        } else {
+            return response()->json(['error' => "la localisation non spécifié."], 400);
         }
 
-
-
+        //return response()->json(["lighting" => $lighting,]);
+        if ($lighting === null && $transportAcces === null && $disabledAcces === null && $sanitary === null && $shower === null) {
+            $fields = $query->paginate(8);
+            return response()->json(["end" => "end", "lol" => $fields]);
+        }
         if ($lighting !== null) {
             $query->where('lighting', $lighting);
+/*             return response()->json([
+                'okk' => 'ok',
+                "result" => $query->paginate(8)
+            ]); */
         }
         if ($transportAcces !== null) {
             $query->where('transport_acces', $transportAcces);
+            /* return response()->json(["aze" => "random"]); */
         }
         if ($disabledAcces !== null) {
             $query->where('disabled_acces', $disabledAcces);
@@ -208,7 +258,12 @@ class FieldController extends Controller
             $query->where('shower', $shower);
         }
 
-        $fields = $query->get();
+        // Vérification si aucune des conditions booléennes n'est spécifiée
+        if ($lighting === null && $transportAcces === null && $disabledAcces === null && $sanitary === null && $shower === null) {
+            return response()->json(['error' => "Aucun filtre booléen spécifié."], 400);
+        }
+
+        $fields = $query->paginate(8);
 
         return response()->json($fields);
     }
