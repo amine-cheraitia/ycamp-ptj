@@ -13,11 +13,6 @@ function ResultPage(props) {
 
   const navigate = useNavigate();
 
-  const detailPage = () => {
-    const id = 123; // ID unique
-    navigate(`/detail/${id}`);
-  };
-
   const activeFilter = (icon) => {
     console.log(icon);
 
@@ -28,6 +23,10 @@ function ResultPage(props) {
       document.querySelector(`.${icon}`).classList.add("active");
     }
   };
+
+  const goToDetails = (id) => {
+    navigate(`/detail/${id}`);
+  }
 
   return (
     <div className="App">
@@ -75,7 +74,9 @@ function ResultPage(props) {
           <p>id: {id}</p> &nbsp;
           <p>ids: {idsArray.join(", ")}</p> */}
 
-          <Thumbnail  label="Terrain de foot" />
+          <div className="grid">
+
+          <Thumbnail  label="Terrain de foot" actionButton={() =>goToDetails(3)} />
           <Thumbnail  label="Terrain de basket" />
           <Thumbnail  label="Terrain de foot" />
           <Thumbnail  label="Terrain de basket" />
@@ -84,9 +85,19 @@ function ResultPage(props) {
           <Thumbnail  label="Terrain de basket" />
           <Thumbnail  label="Terrain de foot" />
           <Thumbnail  label="Terrain de basket" />
+          </div>
 
+
+          <div className="pagination">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+        </div>
           {/* <button onClick={detailPage}>Go to Button</button> */}
         </div>
+        
       </main>
       <Footer />
     </div>
