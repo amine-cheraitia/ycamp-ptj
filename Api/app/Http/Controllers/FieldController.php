@@ -34,7 +34,7 @@ class FieldController extends Controller
             $query->where('type_sports_field_id', $request->type_sports_field_id);
         }
 
-        $fields = $query->paginate(50);
+        $fields = $query->paginate(8);
 
         return response()->json($fields);
     }
@@ -146,6 +146,69 @@ class FieldController extends Controller
         }
 
         $fields = $query->paginate(8);
+
+        return response()->json($fields);
+    }
+
+    public function getFieldListWithFilter(Request $request)
+    {
+        $typeSportsFieldId = $request->type_sports_field_id;
+        $regionId = $request->region_id;
+        $departmentId = $request->department_id;
+        $cityId = $request->city_id;
+        /*         $lighting = $request->lighting;
+        $transportAcces = $request->transport_acces;
+        $disabledAcces = $request->disabled_acces;
+        $sanitary = $request->sanitary;
+        $shower = $request->shower; */
+        $lighting = filter_var($request->lighting, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $transportAcces = filter_var($request->transport_acces, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $disabledAcces = filter_var($request->disabled_acces, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $sanitary = filter_var($request->sanitary, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $shower = filter_var($request->shower, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+        //return response()->json(['lighting' => $lighting, "transportAcces" => $transportAcces]);
+        $query = Field::query();
+
+        if ($typeSportsFieldId) {
+            $query->where('type_sports_field_id', $typeSportsFieldId);
+        } else {
+            //return response()->json(['random' => $request->type_sports_field_id]);
+        }
+
+        if ($regionId !== null) {
+            $query->whereHas('adresse.city.department.region', function ($q) use ($regionId) {
+                $q->where('id', $regionId);
+            });
+        } elseif ($departmentId !== null) {
+            $query->whereHas('adresse.city.department', function ($q) use ($departmentId) {
+                $q->where('id', $departmentId);
+            });
+        } elseif ($cityId !== null) {
+            $query->whereHas('adresse.city', function ($q) use ($cityId) {
+                $q->where('id', $cityId);
+            });
+        }
+
+
+
+        if ($lighting !== null) {
+            $query->where('lighting', $lighting);
+        }
+        if ($transportAcces !== null) {
+            $query->where('transport_acces', $transportAcces);
+        }
+        if ($disabledAcces !== null) {
+            $query->where('disabled_acces', $disabledAcces);
+        }
+        if ($sanitary !== null) {
+            $query->where('sanitary', $sanitary);
+        }
+        if ($shower !== null) {
+            $query->where('shower', $shower);
+        }
+
+        $fields = $query->get();
 
         return response()->json($fields);
     }

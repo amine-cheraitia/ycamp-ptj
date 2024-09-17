@@ -46,11 +46,11 @@ class FieldSeeder extends Seeder
                     'observation_1' => $record['observation_1'], // Observation 1
                     'observation_2' => $record['observation_2'], // Observation 2
                     'ground_type' => $record['ground_type'], // Type de sol
-                    'lighting' => filter_var($record['lighting'], FILTER_VALIDATE_BOOLEAN), // Éclairage
-                    'transport_acces' => filter_var($record['transport_acces'], FILTER_VALIDATE_BOOLEAN), // Accès au transport
-                    'disabled_acces' => filter_var($record['disabled_acces'], FILTER_VALIDATE_BOOLEAN), // Accès handicapés
-                    'sanitary' => filter_var($record['sanitary'], FILTER_VALIDATE_BOOLEAN), // Sanitaires
-                    'shower' => filter_var($record['shower'], FILTER_VALIDATE_BOOLEAN), // Douches
+                    'lighting' => $record['lighting'] === 'True' ? 1 : 0, // Éclairage
+                    'transport_acces' => $record['transport_acces'] === 'True' ? 1 : 0, // Accès au transport
+                    'disabled_acces' => $record['disabled_acces'] === 'True' ? 1 : 0, // Accès handicapés
+                    'sanitary' => $record['sanitary'] === 'True' ? 1 : 0, // Sanitaires
+                    'shower' => $record['shower'] === 'True' ? 1 : 0, // Douches
                     'web_link' => $record['web_link'], // Lien web
                     'adresse_id' => $record['id_place'], // ID de l'adresse correspondante
                     'type_sports_field_id' => $typeSportsField->id, // ID du type de terrain de sport correspondant
