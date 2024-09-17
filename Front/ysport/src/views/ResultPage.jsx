@@ -13,11 +13,6 @@ function ResultPage(props) {
 
   const navigate = useNavigate();
 
-  const detailPage = () => {
-    const id = 123; // ID unique
-    navigate(`/detail/${id}`);
-  };
-
   const activeFilter = (icon) => {
     console.log(icon);
 
