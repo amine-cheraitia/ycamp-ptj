@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('adresse_id');
             $table->foreign('adresse_id')->references('id')->on('adresses');
 
-            $table->unsignedBigInteger('type_sports_field_id');
+            $table->string('type_sports_field_id');
             $table->foreign('type_sports_field_id')->references('id')->on('type_sports_fields');
             $table->timestamps();
         });

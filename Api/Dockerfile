@@ -17,7 +17,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN apk add nodejs npm
 
 ENV WEB_DOCUMENT_ROOT /app/public
-ENV APP_ENV production
+ENV APP_ENV local
 WORKDIR /app
 COPY . .
 

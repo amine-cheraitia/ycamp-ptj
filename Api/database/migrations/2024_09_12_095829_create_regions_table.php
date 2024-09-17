@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('regions', function (Blueprint $table) {
-            $table->unsignedInteger('id')->primary();
+            $table->string('id')->primary();
             $table->string("region_name")->nullable();
             $table->timestamps();
         });
