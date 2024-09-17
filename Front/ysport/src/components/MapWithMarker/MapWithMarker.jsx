@@ -1,6 +1,13 @@
 import "./MapWithMarker.scss";
 import React, { useCallback, useState } from "react";
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from "@react-google-maps/api";
+import keyData from '../../../Api_key/key.json';
+
+
+// Recuperer la clé Api
+const my_keyData = keyData.apiKey;
+// console.log(my_keyData)
+
 
 // Style de la carte (dimensions)
 const mapContainerStyle = {
@@ -14,19 +21,19 @@ const center = {
   lng: 2.3522,
 };
 
-const MapWithMarker = ({ id_place, place_name, longitude, latitude }) => {
+function MapWithMarker(props){
   // Gérer l'ouverture de l'InfoWindow
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   // Centrer la carte sur la localisation
   const center = {
-    lat: latitude,
-    lng: longitude,
+    lat: props.latitude,
+    lng: props.longitude,
   };
 
   // Charge la carte avec le hook useLoadScript
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAmc1pqL90q8E_DO8GojSiiwuq8tbH5VyI", // Remplace par ta clé API
+    googleMapsApiKey: my_keyData, // Remplace par ta clé API
   });
 
   // Fonction appelée quand on clique sur un marker
@@ -46,7 +53,7 @@ const MapWithMarker = ({ id_place, place_name, longitude, latitude }) => {
       <Marker
         position={center}
         onClick={() =>
-          handleMarkerClick({ lat: latitude, lng: longitude, name: place_name, id: id_place })
+          handleMarkerClick({ lat: props.latitude, lng: props.longitude, name: props.place_name, id: props.id_place })
         }
       />
 
