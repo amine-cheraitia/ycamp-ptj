@@ -26,15 +26,15 @@ class RegionController extends Controller
         ]);*/
         $formattedRegions = $regions->map(function ($region) {
             return [
-                'id' => $region->id,
+                'region_id' => $region->id,
                 'region_name' => $region->region_name,
                 'departments' => $region->departments->map(function ($department) {
                     return [
-                        'id' => $department->id,
+                        'department_id' => $department->id,
                         'department_name' => $department->department_name,
                         'cities' => $department->cities->map(function ($city) {
                             return [
-                                'id' => $city->id,
+                                'city_id' => $city->id,
                                 'city_name' => $city->city_name,
                                 'zip_code' => $city->zip_code,
                             ];
