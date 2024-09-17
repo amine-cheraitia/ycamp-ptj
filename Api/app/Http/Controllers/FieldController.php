@@ -239,7 +239,7 @@ class FieldController extends Controller
         }
         if ($lighting !== null) {
             $query->where('lighting', $lighting);
-/*             return response()->json([
+            /*             return response()->json([
                 'okk' => 'ok',
                 "result" => $query->paginate(8)
             ]); */
@@ -266,5 +266,13 @@ class FieldController extends Controller
         $fields = $query->paginate(8);
 
         return response()->json($fields);
+    }
+
+    public function getFieldDetail($id)
+    {
+        $field = Field::findOrFail($id);
+
+        // Retourner une réponse JSON avec les détails du champ
+        return response()->json($field);
     }
 }

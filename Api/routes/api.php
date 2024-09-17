@@ -26,3 +26,7 @@ Route::get('/fieldlists', [FieldController::class, 'getFieldList']);
 
 //filter
 Route::get('/fields', [FieldController::class, 'getFieldListWithFilter']);
+
+//details
+
+Route::get('/field/{id}', [FieldController::class, 'getFieldDetail']);
