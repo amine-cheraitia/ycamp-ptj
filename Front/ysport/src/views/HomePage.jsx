@@ -10,6 +10,7 @@ import Footer from "../components/Footer/Footer";
 import Checkbox from "../components/Checkbox/Checkbox";
 
 function HomePage() {
+  // Open the modal for the type of terrain
   const openModal = () => {
     if (document.querySelector(".modal").classList.contains("hidden")) {
       document.querySelector(".modal").classList.remove("hidden");
@@ -38,6 +39,9 @@ function HomePage() {
     }
   };
 
+  ////
+
+  // Use the navigate function from the react-router-dom package
   const navigate = useNavigate();
 
   const resultPage = () => {
@@ -45,6 +49,10 @@ function HomePage() {
     const ids = [1, 2, 3, 4];
     navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
+
+  ////
+
+  // Fetch the data from the JSON file
 
   let [terrains, setTerrains] = useState([]);
   useEffect(() => {
@@ -61,39 +69,77 @@ function HomePage() {
     }
   });
 
-  const villes = {
-    Paris: "Paris",
-    Lyon: "Lyon",
-    Marseille: "Marseille",
-    Lille: "Lille",
-    Bordeaux: "Bordeaux",
-    Toulouse: "Toulouse",
-    Nantes: "Nantes",
-    Strasbourg: "Strasbourg",
-    Montpellier: "Montpellier",
-    Rennes: "Rennes",
-    Grenoble: "Grenoble",
-    Nice: "Nice",
-    Toulon: "Toulon",
-    Brest: "Brest",
-    Angers: "Angers",
-  };
+  ////
 
-  const [filteredVilles, setFilteredVilles] = useState(Object.keys(villes));
+  /// Fetch the data from the API
 
-  console.log("filter", filteredVilles);
+  let [localisation, setLocalisation] = useState([]);
+  const [filteredVilles, setFilteredVilles] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/locations")
+      .then((response) => response.json())
+      .then((data) => {
+        setLocalisation([]);
+        setFilteredVilles([]);
+
+        data.forEach((region) => {
+          region.type = "region";
+          region.name = region.region_name;
+
+          setLocalisation((localisation) => [...localisation, region]);
+          setFilteredVilles((filteredVilles) => [...filteredVilles, region]);
+
+          region.departments.forEach((department) => {
+            department.type = "department";
+            department.name = department.department_name;
+
+            setFilteredVilles((filteredVilles) => [...filteredVilles, department]);
+            setLocalisation((localisation) => [...localisation, department]);
+            department.cities.forEach((city) => {
+              city.type = "city";
+              city.name = city.city_name;
+
+              setFilteredVilles((filteredVilles) => [...filteredVilles, city]);
+              setLocalisation((localisation) => [...localisation, city]);
+            });
+          });
+        });
+      });
+  }, []);
+
+  console.log("localisation", localisation);
+
+  ////
+
+  // Search for a city, a region or a department
 
   const searchLoc = (e) => {
-    console.log(e.target.value);
-
     setFilteredVilles(
-      Object.keys(villes).filter((ville) => {
-        return ville.toLowerCase().startsWith(e.target.value.toLowerCase());
+      localisation.filter((localisation) => {
+        // if (localisation.type === "city") {
+        //   return localisation.city_name.toLowerCase().startsWith(e.target.value.toLowerCase());
+        // } else if (localisation.type === "department") {
+        //   return localisation.department_name.toLowerCase().startsWith(e.target.value.toLowerCase());
+        // } else {
+        //   return localisation.region_name.toLowerCase().startsWith(e.target.value.toLowerCase());
+        // }
+        return localisation.name.toLowerCase().startsWith(e.target.value.toLowerCase());
       })
     );
 
-    console.log(filteredVilles);
+    console.log("searchloc", filteredVilles);
   };
+
+  ///  Select the terrain
+
+  const selectTerrain = (key) => {
+    return () => {
+      console.log("key add", key);
+    };
+  };
+
+  ///
 
   return (
     <div className="App">
@@ -113,7 +159,7 @@ function HomePage() {
               <div className="modal-content">
                 <div className="col1">
                   {Object.keys(terrainUnique).map((key, index) => (
-                    <Checkbox key={index} label={terrainUnique[key]} />
+                    <Checkbox key={index} label={terrainUnique[key]} action={selectTerrain(key)} />
                   ))}
                 </div>
               </div>
@@ -129,12 +175,14 @@ function HomePage() {
                 <input type="text" onChange={(e) => searchLoc(e)} placeholder="Rechercher une ville, une région..." />
                 <div className="ListeDeroulante">
                   <div className="ListeDeroulanteContent">
-                    {filteredVilles.map((ville, index) => (
-                      <div className="ListeDeroulanteItem" key={index}>
-                        <p>{ville}</p>
-                        {index !== filteredVilles.length - 1 && <div className="spaceLine"></div>}
-                      </div>
-                    ))}
+                    {filteredVilles
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((localisation, index) => (
+                        <div className="ListeDeroulanteItem" data-key={localisation.name} key={index}>
+                          <p>{localisation.name}</p>
+                          {index !== filteredVilles.length - 1 && <div className="spaceLine"></div>}
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
