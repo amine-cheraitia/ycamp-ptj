@@ -40,9 +40,10 @@ function HomePage() {
 
   const navigate = useNavigate();
 
+  // function to send Url to next page
   const resultPage = () => {
     const id = 123;
-    const ids = [1, 2, 3, 4];
+    const ids = selectedSportType;
     navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
 
@@ -59,8 +60,7 @@ function HomePage() {
   // End Get Sport Type from API
 
   // Start Make table of selected sports
-  // const [selectedSportType, setSelectedSportType] = useState([]);
-  // setSelectedSportType(prevSelectedSportType => ({ ...prevSelectedSportType, id }));
+  // Function to redefine array
   function recreateArray(arr, ignoreValue) {
     return arr.filter(function(value) {
         return value !== ignoreValue;
@@ -77,8 +77,7 @@ function HomePage() {
       console.log("Add", selectedSportType);
     }
   };
-
-  // Start Make table of selected sports
+  // End Make table of selected sports
 
   const villes = {
     Paris: "Paris",
