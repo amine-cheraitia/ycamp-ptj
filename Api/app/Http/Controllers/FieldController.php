@@ -151,6 +151,51 @@ class FieldController extends Controller
         return response()->json($fields);
     }
 
+    //try
+    public function getFieldListe(Request $request)
+    {
+        $typeSportsFieldIds = $request->type_sports_field_id;
+        $regionId = $request->region_id;
+        $departmentId = $request->department_id;
+        $cityId = $request->city_id;
+
+        $query = Field::query();
+
+        if ($typeSportsFieldIds) {
+            if (is_array($typeSportsFieldIds)) {
+                $query->whereIn('type_sports_field_id', $typeSportsFieldIds);
+            } else {
+                return response()->json(['error' => "Type de terrain de sport doit être un tableau."], 400);
+            }
+        } else {
+            return response()->json(['error' => "Type de terrain de sport non spécifié."], 400);
+        }
+
+        if ($regionId !== null) {
+            $query->whereHas('adresse.city.department.region', function ($q) use ($regionId) {
+                $q->where('id', $regionId);
+            });
+        } elseif ($departmentId !== null) {
+            $query->whereHas('adresse.city.department', function ($q) use ($departmentId) {
+                $q->where('id', $departmentId);
+            });
+        } elseif ($cityId !== null) {
+            $query->whereHas('adresse.city', function ($q) use ($cityId) {
+                $q->where('id', $cityId);
+            });
+        } else {
+            return response()->json(['error' => "La localisation non spécifiée."], 400);
+        }
+
+        $fields = $query->paginate(8);
+
+        return response()->json($fields);
+    }
+
+
+
+    //end try
+
     public function getFieldListWithFilter(Request $request)
     {
         $typeSportsFieldId = $request->type_sports_field_id;
