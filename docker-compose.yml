@@ -22,6 +22,7 @@ services:
         php artisan serve --host=0.0.0.0 --port=8000
       "
     restart: always
+
   mysql-db:
     image: mysql:8.0
     container_name: mysql-db
@@ -35,6 +36,16 @@ services:
     ports:
       - 3309:3306
     restart: always
+
+  react-app:
+    build: ./Front/ysport
+    container_name: react-app
+    ports:
+      - 3000:80  # Utiliser Nginx pour servir sur le port 80
+    volumes:
+      - ./Front/ysport:/app
+    depends_on:
+      - laravel-app
 
 volumes:
   mysql-db:

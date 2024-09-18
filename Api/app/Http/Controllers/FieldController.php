@@ -157,28 +157,7 @@ class FieldController extends Controller
         $regionId = $request->region_id;
         $departmentId = $request->department_id;
         $cityId = $request->city_id;
-        /*         $lighting = $request->lighting;
-        $transportAcces = $request->transport_acces;
-        $disabledAcces = $request->disabled_acces;
-        $sanitary = $request->sanitary;
-        $shower = $request->shower; */
 
-        /*
-        $lighting = null;
-        $transportAcces = null;
-        $disabledAcces = null;
-        $sanitary = null;
-        $shower = null;
-        $lighting = $request->lighting;
-        $transportAcces = $request->transport_acces;
-        $disabledAcces = $request->disabled_acces;
-        $sanitary = $request->sanitary;
-        $shower = $request->shower;
-*/
-        $typeSportsFieldId = $request->type_sports_field_id;
-        $regionId = $request->region_id;
-        $departmentId = $request->department_id;
-        $cityId = $request->city_id;
         //
         /*$lighting = $request->has('lighting') ? $request->lighting : null;
         $transportAcces = $request->has('transport_acces') ? $request->transport_acces : null;
@@ -191,23 +170,6 @@ class FieldController extends Controller
         $sanitary = $request->has('sanitary') ? (int) filter_var($request->sanitary, FILTER_VALIDATE_BOOLEAN) : null;
         $shower = $request->has('shower') ? (int) filter_var($request->shower, FILTER_VALIDATE_BOOLEAN) : null;
 
-
-
-
-
-        //
-        //$lighting = filter_var($request->lighting ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        //$transportAcces = filter_var($request->transport_acces ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        //$disabledAcces = filter_var($request->disabled_acces ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        //$sanitary = filter_var($request->sanitary ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        //$shower = filter_var($request->shower ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        /*  return response()->json([
-            "lighting" => $lighting,
-            "transportAcces" => $transportAcces,
-            "disabledAcces" => $disabledAcces,
-            "sanitary" => $sanitary,
-            "shower" => $shower,
-        ]);*/
         $query = Field::query();
 
         if ($typeSportsFieldId) {

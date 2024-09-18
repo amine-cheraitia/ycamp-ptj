@@ -18,11 +18,11 @@ ENV APP_ENV local
 WORKDIR /app
 
 # Cloner le dépôt Git a la place de copier le contenu en local (ATTENTION : branche "docker" a modifier plus tard)
-RUN git clone --branch docker https://github.com/amine-cheraitia/ycamp-ptj.git .
-#COPY . .
+# RUN git clone --branch docker https://github.com/amine-cheraitia/ycamp-ptj.git .
+COPY . .
 
-# Changer le répertoire de travail pour le dossier Api
-WORKDIR /app/Api
+# Changer le répertoire de travail pour le dossier Api / a décommenter quand on passera par le clone du repository
+#WORKDIR /app/Api
 
 # Copier le fichier .env.example pour le renommer en .env
 RUN cp .env.example .env
@@ -38,9 +38,3 @@ RUN php artisan config:cache
 RUN php artisan route:cache
 # Optimizing View loading
 RUN php artisan view:cache
-
-
-#RUN php artisan migrate --force
-#RUN php artisan db:seed --force
-
-#CMD [ "php artisan serve " ]
