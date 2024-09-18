@@ -202,22 +202,12 @@ class FieldController extends Controller
         $regionId = $request->region_id;
         $departmentId = $request->department_id;
         $cityId = $request->city_id;
-        $typeSportsFieldId = $request->type_sports_field_id;
-        $regionId = $request->region_id;
-        $departmentId = $request->department_id;
-        $cityId = $request->city_id;
+
         $lighting = $request->has('lighting') ? (int) filter_var($request->lighting, FILTER_VALIDATE_BOOLEAN) : null;
         $transportAcces = $request->has('transport_acces') ? (int) filter_var($request->transport_acces, FILTER_VALIDATE_BOOLEAN) : null;
         $disabledAcces = $request->has('disabled_acces') ? (int) filter_var($request->disabled_acces, FILTER_VALIDATE_BOOLEAN) : null;
         $sanitary = $request->has('sanitary') ? (int) filter_var($request->sanitary, FILTER_VALIDATE_BOOLEAN) : null;
         $shower = $request->has('shower') ? (int) filter_var($request->shower, FILTER_VALIDATE_BOOLEAN) : null;
-
-        $query = Field::query();
-
-        $typeSportsFieldIds = $request->type_sports_field_id;
-        $regionId = $request->region_id;
-        $departmentId = $request->department_id;
-        $cityId = $request->city_id;
 
         $query = Field::query();
 
@@ -284,3 +274,4 @@ class FieldController extends Controller
         return response()->json($field);
     }
 }
+

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("latitude");
             $table->timestamps();
 
-            $table->unsignedBigInteger('city_id');
+            $table->string('city_id');
             $table->foreign('city_id')->references('id')->on('cities');
         });
     }
