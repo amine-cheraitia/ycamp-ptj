@@ -2,7 +2,9 @@ import "../styles/HomePage.scss";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faPersonRunning, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+
 
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
@@ -10,6 +12,7 @@ import Footer from "../components/Footer/Footer";
 import Checkbox from "../components/Checkbox/Checkbox";
 
 function HomePage() {
+  
   const openModal = () => {
     if (document.querySelector(".modal").classList.contains("hidden")) {
       document.querySelector(".modal").classList.remove("hidden");

@@ -1,0 +1,48 @@
+services:
+  laravel-app:
+    build: ./Api
+    container_name: laravel-app
+    ports:
+      - 8000:8000
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_DATABASE: sport_field
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    depends_on:
+      - mysql-db
+    volumes:
+      - ./Api:/var/www/html
+    command: >
+      sh -c "
+        php artisan migrate --force &&
+        php artisan db:seed --force &&
+        php artisan serve --host=0.0.0.0 --port=8000
+      "
+    restart: always
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sport_field
+    volumes:
+      - mysql-db:/var/lib/mysql
+    ports:
+      - 3309:3306
+    restart: always
+
+  react-app:
+    build: ./Front/ysport
+    container_name: react-app
+    ports:
+      - 3000:80 
+    volumes:
+      - ./Front/ysport:/app
+    depends_on:
+      - laravel-app
+
+volumes:
+  mysql-db:

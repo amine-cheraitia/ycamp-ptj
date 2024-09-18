@@ -1,5 +1,6 @@
 import "../styles/DetailPage.scss";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -7,6 +8,19 @@ import Button from "../components/Button/Button";
 
 function DetailPage(props) {
   const { id } = useParams();
+
+
+  let [details, setDetails] = useState([]);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/field/" + id)
+      .then((response) => response.json())
+      .then((data) => {
+        setDetails(data);
+      });
+  }, [id]);
+
+  console.log(details);
 
   const champsDétails = ['Type de terrain', 'Accès en transports', 'Accès handicapé', 'Sanitaires', 'Douches', 'Éclairage', 'Site Web', 'Adresse', 'Département', 'Région', 'Coordonnées GPS', 'Observations'];
 
