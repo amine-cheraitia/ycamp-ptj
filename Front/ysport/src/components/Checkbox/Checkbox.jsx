@@ -5,8 +5,10 @@ function Checkbox(props) {
   const dataKey = props.dataKey;
   const action = props.action;
   return (
-    <label className="checkbox" key={dataKey}>
-      <input type="checkbox" onClick={action}/>
+
+    <label className="checkbox">
+      <input type="checkbox" onClick={props.action} />
+
       <span className="checkmark"></span>
       <p>{label}</p>
     </label>

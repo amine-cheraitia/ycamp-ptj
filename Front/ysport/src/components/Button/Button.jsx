@@ -8,8 +8,6 @@ function Button(props) {
 
   const icon = props.icon;
 
-  console.log(icon);
-
   return (
     <button className="button_main_style" onClick={ props.action}>
       {icon === "faLocationDot" && <FontAwesomeIcon icon={faLocationDot} />}
