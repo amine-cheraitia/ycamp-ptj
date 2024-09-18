@@ -7,14 +7,13 @@ const PhotoGallery = () => {
   useEffect(() => {
     const loadPhotos = async () => {
       const fetchedPhotos = await fetchRandomSportPhotos();
-      setPhotos(fetchedPhotos);
-    };
+      setPhotos(fetchedPhotos);    };
 
-    loadPhotos();
-  }, []);
-
-  return (
-    <div>
+      loadPhotos();
+    }, []);
+  
+    return (
+      <div>
       <div className="photo-gallery">
         {photos.map(photo => (
           <img 
