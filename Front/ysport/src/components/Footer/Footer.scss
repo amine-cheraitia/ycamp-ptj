@@ -1,33 +1,21 @@
 .App-footer {
-  background-color: #e0f7ff;
+  background-color: #ffffff;
   min-height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: #1c4d85;
-  font-size: 16px;
+  font-size: 12px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1;
   position: relative;
 
-  .left {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 16px;
-    padding: 0px 15px;
-  }
-
+  .left,
   .right {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    font-size: 16px;
     padding: 0px 15px;
-    gap: 20px;
   }
 }

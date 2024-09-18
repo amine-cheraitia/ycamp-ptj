@@ -1,0 +1,184 @@
+.App-main {
+  &.col {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+
+    .header {
+      height: 140px;
+      background: #fdfcf2;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       
+        z-index: 1;
+        border-radius: 50px;
+        border: 1px solid rgba(30, 30, 30, 0.25);
+        background: #fff;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        width: 40%;
+        height: 50px;
+        flex-shrink: 0;
+        padding: 0px 10px;
+        position: relative;
+        gap: 5px;
+
+        &.disable {
+          background-color: #c7c7c7;
+        }
+
+        .type,
+        .type2 {
+          flex: 1;
+        
+          border-radius: 50px;
+          user-select: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 75%;
+
+          svg {
+            margin-right: 5px;
+     
+            height: 20px;
+          }
+
+          .label {
+            font-size: 14px;
+          }
+        }
+
+        .separator {
+          width: 1px;
+          height: 40px;
+          background-color: rgba(30, 30, 30, 0.25);
+          padding-right: 1px;
+        }
+      }
+
+      .filters {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+
+        .filter-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 5px 10px;
+          border-radius: 50px;
+          background: #fff;
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+          cursor: pointer;
+          user-select: none;
+
+          &.active {
+            background: #ff9933;
+            color: #fff;
+
+            svg {
+              color: #fff;
+            }
+
+            &:hover {
+              background: #ff9933;
+              color: #fff;
+            }
+          }
+
+          &:hover {
+            background: #ff9933;
+            color: #fff;
+
+            svg {
+              color: #fff;
+            }
+          }
+
+          svg {
+            margin-right: 5px;
+            height: 20px;
+            color: #ff9933;
+          }
+        }
+      }
+    }
+
+    .container {
+      gap: 0;
+
+      height: calc(100vh - 270px);
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+      .grid {
+        z-index: 1;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width: 100%;
+        max-width: 70%;
+        grid-template-rows: 240px 240px;
+        padding: 10px;
+       
+        justify-items: center;
+      }
+
+      .footer {
+        display: flex;
+        place-items: center;
+        width: 100%;
+        justify-content: space-around;
+    
+
+
+        .pagination {
+          border-radius: 50px;
+          border: 1px solid rgba(30, 30, 30, 0.25);
+          background: #fff;
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  
+          button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50px;
+            margin: 0px 5px;
+            transition: 0.3s;
+  
+            &:hover {
+              background: #ff9933;
+              color: #fff;
+            }
+  
+            &.active {
+              background: #ff9933;
+              color: #fff;
+            }
+          }
+        }
+      }
+
+
+    }
+  }
+}
