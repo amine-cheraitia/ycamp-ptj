@@ -6,11 +6,6 @@ import Button from "../Button/Button";
 function Thumbnail(props) {
   const label = props.label;
 
-  // const actionButton  = props.actionButton;
-  // url of the image by unsplash API
-
-  // const image = "https://api.unsplash.com/photos/random?query=sports&client_id=-1TRCgKz8KAchgLmu1ofmfiSeYfRpmfe7Fd9vNv1AoE";
-
   return (
     <div className="thumbnail">
       <PhotoGallery />
@@ -27,8 +22,10 @@ function Thumbnail(props) {
         </div>
       </div>
 
-      <Button text="Carte" icon={true} />
-      <Button text="Détails" icon={true} action={props.actionButton} />
+<div className="thumbnail-buttons">
+      <Button text="Carte" icon={"faLocationDot"} />
+      <Button text="Détails" icon={"faPlus"} action={props.actionButton} />
+      </div>
     </div>
   );
 }
