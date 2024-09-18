@@ -50,22 +50,20 @@ function HomePage() {
     navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
 
-
-
-
   // Start Get Sports Type from API
   let [sportsType, setSportsType] = useState([]);
 
   useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/typesportsfield")
-        .then((response) => response.json())
-        .then((data) => {
-            setSportsType(data)
-        });
-    }, []);
+    fetch("http://127.0.0.1:8000/api/typesportsfield")
+      .then((response) => response.json())
+      .then((data) => {
+        setSportsType(data);
+      });
+  }, []);
   // End Get Sport Type from API
-  
+
   ////
+  
 
   /// Fetch the data from the API
 
@@ -154,12 +152,7 @@ function HomePage() {
             <div className="modal hidden">
               <div className="modal-content">
                 <div className="col1">
-
-
-                  {sportsType && sportsType.map((sport, index) => (
-                    <Checkbox key={sport.type_sports_field_id} label={sport.type_of_sport_field} />
-
-                  ))}
+                  {sportsType && sportsType.map((sport, index) => <Checkbox key={sport.type_sports_field_id} label={sport.type_of_sport_field} />)}
                 </div>
               </div>
             </div>
