@@ -46,20 +46,25 @@ function HomePage() {
     navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
 
-  let [terrains, setTerrains] = useState([]);
+
+  // Start Get Sports Type from API
+  let [sportsType, setSportsType] = useState([]);
+  // Pauline version - terrains
+  // useEffect(() => {
+  //   fetch("/Json/result_for_front_dev_test.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setTerrains(data.type_of_sport_field));
+  // }, []);
+
+  // Max Version 
   useEffect(() => {
-    fetch("/Json/result_for_front_dev_test.json")
-      .then((response) => response.json())
-      .then((data) => setTerrains(data.type_of_sport_field));
-  }, []);
-
-  const terrainUnique = {};
-
-  Object.keys(terrains).forEach((key) => {
-    if (!terrainUnique[terrains[key]]) {
-      terrainUnique[terrains[key]] = terrains[key];
-    }
-  });
+        fetch("http://127.0.0.1:8000/api/typesportsfield")
+        .then((response) => response.json())
+        .then((data) => {
+            setSportsType(data)
+        });
+    }, []);
+  // End Get Sport Type from API
 
   const villes = {
     Paris: "Paris",
@@ -112,8 +117,8 @@ function HomePage() {
             <div className="modal hidden">
               <div className="modal-content">
                 <div className="col1">
-                  {Object.keys(terrainUnique).map((key, index) => (
-                    <Checkbox key={index} label={terrainUnique[key]} />
+                  {sportsType && sportsType.map((sport, index) => (
+                    <Checkbox key={sport.type_sports_field_id} label={sport.type_of_sport_field} />
                   ))}
                 </div>
               </div>
