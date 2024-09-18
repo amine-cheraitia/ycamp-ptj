@@ -2,8 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./views/HomePage";
 import ResultPage from "./views/ResultPage";
 import DetailPage from "./views/DetailPage";
-import MapWithMarker from "./components/MapWithMarker/MapWithMarker";
-import ModalMap from "./components/ModalMap/ModalMap";
+import SportTypeList from "./components/MakeSportTypeList/MakeSportTypeList";
 import ContactPage from "./views/ContactPage";
 
 function App() {
@@ -15,8 +14,8 @@ function App() {
       <Route path="/contact" element={<ContactPage />} />
 
       {/* <!-- Componant test zone --> */ }
-      <Route path="/ModalMap" element={<ModalMap id_place="IO_1337" place_name="Tour Eiffel 42" longitude={2.2945} latitude={48.8584} adress="421 rue de backend 33200 NOWHERE"  />} />
-      
+      <Route path="/test"  element={<SportTypeList />} />
+
     </Routes>
   );
 }
