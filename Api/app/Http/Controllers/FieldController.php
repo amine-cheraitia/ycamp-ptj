@@ -151,6 +151,51 @@ class FieldController extends Controller
         return response()->json($fields);
     }
 
+    //try
+    public function getFieldListe(Request $request)
+    {
+        $typeSportsFieldIds = $request->type_sports_field_id;
+        $regionId = $request->region_id;
+        $departmentId = $request->department_id;
+        $cityId = $request->city_id;
+
+        $query = Field::query();
+
+        if ($typeSportsFieldIds) {
+            if (is_array($typeSportsFieldIds)) {
+                $query->whereIn('type_sports_field_id', $typeSportsFieldIds);
+            } else {
+                return response()->json(['error' => "Type de terrain de sport doit être un tableau."], 400);
+            }
+        } else {
+            return response()->json(['error' => "Type de terrain de sport non spécifié."], 400);
+        }
+
+        if ($regionId !== null) {
+            $query->whereHas('adresse.city.department.region', function ($q) use ($regionId) {
+                $q->where('id', $regionId);
+            });
+        } elseif ($departmentId !== null) {
+            $query->whereHas('adresse.city.department', function ($q) use ($departmentId) {
+                $q->where('id', $departmentId);
+            });
+        } elseif ($cityId !== null) {
+            $query->whereHas('adresse.city', function ($q) use ($cityId) {
+                $q->where('id', $cityId);
+            });
+        } else {
+            return response()->json(['error' => "La localisation non spécifiée."], 400);
+        }
+
+        $fields = $query->paginate(8);
+
+        return response()->json($fields);
+    }
+
+
+
+    //end try
+
     public function getFieldListWithFilter(Request $request)
     {
         $typeSportsFieldId = $request->type_sports_field_id;
@@ -158,12 +203,6 @@ class FieldController extends Controller
         $departmentId = $request->department_id;
         $cityId = $request->city_id;
 
-        //
-        /*$lighting = $request->has('lighting') ? $request->lighting : null;
-        $transportAcces = $request->has('transport_acces') ? $request->transport_acces : null;
-        $disabledAcces = $request->has('disabled_acces') ? $request->disabled_acces : null;
-        $sanitary = $request->has('sanitary') ? $request->sanitary : null;
-        $shower = $request->has('shower') ? $request->shower : null;*/
         $lighting = $request->has('lighting') ? (int) filter_var($request->lighting, FILTER_VALIDATE_BOOLEAN) : null;
         $transportAcces = $request->has('transport_acces') ? (int) filter_var($request->transport_acces, FILTER_VALIDATE_BOOLEAN) : null;
         $disabledAcces = $request->has('disabled_acces') ? (int) filter_var($request->disabled_acces, FILTER_VALIDATE_BOOLEAN) : null;
@@ -172,8 +211,12 @@ class FieldController extends Controller
 
         $query = Field::query();
 
-        if ($typeSportsFieldId) {
-            $query->where('type_sports_field_id', $typeSportsFieldId);
+        if ($typeSportsFieldIds) {
+            if (is_array($typeSportsFieldIds)) {
+                $query->whereIn('type_sports_field_id', $typeSportsFieldIds);
+            } else {
+                return response()->json(['error' => "Type de terrain de sport doit être un tableau."], 400);
+            }
         } else {
             return response()->json(['error' => "Type de terrain de sport non spécifié."], 400);
         }
@@ -194,21 +237,15 @@ class FieldController extends Controller
             return response()->json(['error' => "la localisation non spécifié."], 400);
         }
 
-        //return response()->json(["lighting" => $lighting,]);
         if ($lighting === null && $transportAcces === null && $disabledAcces === null && $sanitary === null && $shower === null) {
             $fields = $query->paginate(8);
             return response()->json(["end" => "end", "lol" => $fields]);
         }
         if ($lighting !== null) {
             $query->where('lighting', $lighting);
-/*             return response()->json([
-                'okk' => 'ok',
-                "result" => $query->paginate(8)
-            ]); */
         }
         if ($transportAcces !== null) {
             $query->where('transport_acces', $transportAcces);
-            /* return response()->json(["aze" => "random"]); */
         }
         if ($disabledAcces !== null) {
             $query->where('disabled_acces', $disabledAcces);
@@ -220,7 +257,6 @@ class FieldController extends Controller
             $query->where('shower', $shower);
         }
 
-        // Vérification si aucune des conditions booléennes n'est spécifiée
         if ($lighting === null && $transportAcces === null && $disabledAcces === null && $sanitary === null && $shower === null) {
             return response()->json(['error' => "Aucun filtre booléen spécifié."], 400);
         }
@@ -229,4 +265,13 @@ class FieldController extends Controller
 
         return response()->json($fields);
     }
+
+    public function getFieldDetail($id)
+    {
+        $field = Field::findOrFail($id);
+
+        // Retourner une réponse JSON avec les détails du champ
+        return response()->json($field);
+    }
 }
+

@@ -14,7 +14,10 @@ Route::get('/user', function (Request $request) {
 //call at bgng
 //Fournis l'ensembles des villes/departements/region
 Route::get('/locations', [RegionController::class, 'locations']);
+
 //Fournis l'ensembles des types de terrains
+
+Route::get('/location', [RegionController::class, 'location']);
 Route::get('/typesportsfield', [TypeSportsFieldController::class, 'index']);
 
 //call first research
@@ -27,5 +30,14 @@ Route::get('/fieldslist', [FieldController::class, 'fieldslist']);
 //Fournis l'ensembles des terrains (type de terrain + Location)
 Route::get('/fieldlists', [FieldController::class, 'getFieldList']);
 
+
 //Fournis l'ensembles des terrains avec les filtres (type de terrain + Location)
+
+//new route
+Route::get('/getFieldListe', [FieldController::class, 'getFieldListe']);
+//filter
+
 Route::get('/fields', [FieldController::class, 'getFieldListWithFilter']);
+
+
+Route::get('/field/{id}', [FieldController::class, 'getFieldDetail']);
