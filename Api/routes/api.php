@@ -18,6 +18,7 @@ Route::get('/locations', [RegionController::class, 'locations']);
 //Fournis l'ensembles des types de terrains
 
 Route::get('/location', [RegionController::class, 'location']);
+Route::get('/ville', [RegionController::class, 'ville']);
 Route::get('/typesportsfield', [TypeSportsFieldController::class, 'index']);
 
 //call first research
