@@ -50,39 +50,28 @@ class RegionController extends Controller
     {
         $query = $request->input('query');
 
-        $regions = Region::with(['departments.cities' => function ($queryBuilder) use ($query) {
-            $queryBuilder->where('city_name', 'like', "$query%");
-        }])
-            ->where('region_name', 'like', "$query%")
-            ->orWhereHas('departments', function ($queryBuilder) use ($query) {
-                $queryBuilder->where('department_name', 'like', "$query%")
-                    ->orWhereHas('cities', function ($queryBuilder) use ($query) {
-                        $queryBuilder->where('city_name', 'like', "$query%");
-                    });
-            })
-            ->get();
+        // Récupérer les départements dont le nom commence par les 3 lettres
+        $departments = Department::where('department_name', 'like', $query . '%')->get();
 
-        $formattedRegions = $regions->map(function ($region) {
-            return [
-                'region_id' => $region->id,
-                'region_name' => $region->region_name,
-                'departments' => $region->departments->map(function ($department) {
-                    return [
-                        'department_id' => $department->id,
-                        'department_name' => $department->department_name,
-                        'cities' => $department->cities->map(function ($city) {
-                            return [
-                                'city_id' => $city->id,
-                                'city_name' => $city->city_name,
-                                'zip_code' => $city->zip_code,
-                            ];
-                        }),
-                    ];
-                }),
-            ];
-        });
+        // Récupérer les régions dont le nom commence par les 3 lettres
+        $regions = Region::where('region_name', 'like', $query . '%')->get();
 
-        return response()->json($formattedRegions);
+        // Récupérer les villes dont le nom commence par les 3 lettres
+        $cities = City::where('city_name', 'like', $query . '%')->get();
+
+        return response()->json([
+            'departments' => $departments,
+            'regions' => $regions,
+            'cities' => $cities,
+        ]);
+    }
+
+    public function ville()
+    {
+        City::all();
+        return response()->json([
+            City::all()
+        ]);
     }
     public function random()
     {
