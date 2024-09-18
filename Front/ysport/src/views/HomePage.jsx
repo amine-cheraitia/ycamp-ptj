@@ -46,17 +46,9 @@ function HomePage() {
     navigate(`/result/${id}/${JSON.stringify(ids)}`);
   };
 
-
   // Start Get Sports Type from API
   let [sportsType, setSportsType] = useState([]);
-  // Pauline version - terrains
-  // useEffect(() => {
-  //   fetch("/Json/result_for_front_dev_test.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setTerrains(data.type_of_sport_field));
-  // }, []);
-
-  // Max Version 
+  // Connect to Api
   useEffect(() => {
         fetch("http://127.0.0.1:8000/api/typesportsfield")
         .then((response) => response.json())
@@ -65,6 +57,28 @@ function HomePage() {
         });
     }, []);
   // End Get Sport Type from API
+
+  // Start Make table of selected sports
+  // const [selectedSportType, setSelectedSportType] = useState([]);
+  // setSelectedSportType(prevSelectedSportType => ({ ...prevSelectedSportType, id }));
+  function recreateArray(arr, ignoreValue) {
+    return arr.filter(function(value) {
+        return value !== ignoreValue;
+    });
+  }
+
+  let selectedSportType = [];
+  const setSelectedSportType = (idSportType) => {
+    if(selectedSportType.includes(idSportType)){
+      selectedSportType = recreateArray(selectedSportType, idSportType)
+      console.log("Remove", selectedSportType);
+    }else{
+      selectedSportType.push(idSportType);
+      console.log("Add", selectedSportType);
+    }
+  };
+
+  // Start Make table of selected sports
 
   const villes = {
     Paris: "Paris",
@@ -86,7 +100,7 @@ function HomePage() {
 
   const [filteredVilles, setFilteredVilles] = useState(Object.keys(villes));
 
-  console.log("filter", filteredVilles);
+  // console.log("filter", filteredVilles);
 
   const searchLoc = (e) => {
     console.log(e.target.value);
@@ -118,7 +132,7 @@ function HomePage() {
               <div className="modal-content">
                 <div className="col1">
                   {sportsType && sportsType.map((sport, index) => (
-                    <Checkbox key={sport.type_sports_field_id} label={sport.type_of_sport_field} />
+                    <Checkbox dataKey={sport.type_sports_field_id} label={sport.type_of_sport_field} action={() => setSelectedSportType(sport.type_sports_field_id)} />
                   ))}
                 </div>
               </div>
