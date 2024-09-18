@@ -1,0 +1,52 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 5px;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+
+  .checkmark {
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgba(30, 30, 30, 0.25);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      background-color: rgba(30, 30, 30, 0.1);
+    }
+
+    &:after {
+      content: "";
+    
+      background-size: cover;
+
+      display: none;
+      width: 11px;
+      position: absolute;
+      height: 11px;
+      top: 1;
+      border-radius: 4px;
+      background-color : #FF9933;
+    }
+  }
+
+  p {
+    text-overflow: ellipsis;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  input:checked + .checkmark:after {
+    display: block;
+  }
+}
