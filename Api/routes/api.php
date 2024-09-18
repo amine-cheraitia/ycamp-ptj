@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 
 //call at bgng
 Route::get('/locations', [RegionController::class, 'locations']);
+Route::get('/location', [RegionController::class, 'location']);
 Route::get('/typesportsfield', [TypeSportsFieldController::class, 'index']);
 
 //call first research
@@ -27,6 +28,5 @@ Route::get('/fieldlists', [FieldController::class, 'getFieldList']);
 //filter
 Route::get('/fields', [FieldController::class, 'getFieldListWithFilter']);
 
-//details
 
 Route::get('/field/{id}', [FieldController::class, 'getFieldDetail']);
