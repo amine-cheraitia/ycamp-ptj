@@ -14,7 +14,6 @@ function ResultPage(props) {
   const navigate = useNavigate();
 
   const activeFilter = (icon) => {
-    console.log(icon);
 
     if (document.querySelector(`.${icon}`).classList.contains("active")) {
       document.querySelector(`.${icon}`).classList.remove("active");
