@@ -10,7 +10,6 @@ COPY package*.json ./
 # Installer les dépendances Node.js
 RUN npm install
 
-#RUN git clone --branch docker https://github.com/amine-cheraitia/ycamp-ptj.git .
 # Copier le reste des fichiers de l'application React
 COPY . .
 
