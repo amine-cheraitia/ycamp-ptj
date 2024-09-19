@@ -34,8 +34,9 @@ function ResultPage(props) {
   // http://localhost:5173/result?city=1775&fields=[16,12]
 
   const location = useLocation();
-  const [city, setCity] = useState(null);
+  const [loc, setLoc] = useState(null);
   const [fields, setFields] = useState([]);
+  const type = location.search.split("=")[0].replace("?", "");
 
 
   useEffect(() => {
@@ -43,12 +44,28 @@ function ResultPage(props) {
     const searchParams = new URLSearchParams(location.search);
 
     // Récupérer la ville et les types de terrain
-    const cityParam = searchParams.get("city");
+
+    // si city est présent dans les query params, on le récupère
+    if (searchParams.has("city")) {
+      const cityParam = searchParams.get("city");
+      setLoc(cityParam);
+    }
+
+
+     // si regions est présent dans les query params, on le récupère
+    if (searchParams.has("regions")) {
+      const regionsParam = searchParams.get("regions");
+      setLoc(regionsParam);
+    }
+
+    // si departements est présent dans les query params, on le récupère
+    if (searchParams.has("departements")) {
+      const departementsParam = searchParams.get("departements");
+      setLoc(departementsParam);
+    }
     const fieldsParam = searchParams.get("fields");
 
-    if (cityParam) {
-      setCity(cityParam);
-    }
+    
 
     if (fieldsParam) {
       // Les champs peuvent être encodés en string, donc on les transforme en tableau
@@ -61,7 +78,7 @@ function ResultPage(props) {
     }
   }, [location]);
 
-  console.log("city", city);
+  console.log("loc", loc);
   console.log("fields", fields);
 
   const activeFilter = (icon) => {
