@@ -1,4 +1,17 @@
 import "../styles/HomePage.scss";
+
+// Strat Import Model and View
+// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
+import {test} from "../controllers/HomeController.jsx";
+// exemple recuperation model
+const hello = test();
+console.log("Test HomeController", hello) 
+import {villes} from "../models/HomeModel.jsx";
+// exemple recuperation model
+const newVilles = villes;
+console.log("Test HomeModel", newVilles) 
+// End Import Model and View
+
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +25,7 @@ import Footer from "../components/Footer/Footer";
 import Checkbox from "../components/Checkbox/Checkbox";
 
 function HomePage() {
-  
+
   const openModal = () => {
     if (document.querySelector(".modal").classList.contains("hidden")) {
       document.querySelector(".modal").classList.remove("hidden");
@@ -82,23 +95,7 @@ function HomePage() {
   };
   // End Make table of selected sports
 
-  const villes = {
-    Paris: "Paris",
-    Lyon: "Lyon",
-    Marseille: "Marseille",
-    Lille: "Lille",
-    Bordeaux: "Bordeaux",
-    Toulouse: "Toulouse",
-    Nantes: "Nantes",
-    Strasbourg: "Strasbourg",
-    Montpellier: "Montpellier",
-    Rennes: "Rennes",
-    Grenoble: "Grenoble",
-    Nice: "Nice",
-    Toulon: "Toulon",
-    Brest: "Brest",
-    Angers: "Angers",
-  };
+
 
   const [filteredVilles, setFilteredVilles] = useState(Object.keys(villes));
 
