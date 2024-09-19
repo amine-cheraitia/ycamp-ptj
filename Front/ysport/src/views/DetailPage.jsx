@@ -1,9 +1,3 @@
-// Strat Import Model and View
-// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
-import {test, text} from "../controllers/DetailController.jsx";
-
-
-
 // Import CSS
 import "../styles/DetailPage.scss";
 
@@ -15,22 +9,7 @@ import Footer from "../components/Footer/Footer";
 import Button from "../components/Button/Button";
 // import MapWithMarker from "../components/MapWithMarker/MapWithMarker";
 import ModalMap from "../components/ModalMap/ModalMap.jsx";
-
-
-
-import {detail} from "../models/DetailModel.jsx";
-// exemple recuperation model
-const detailFromModel = detail;
-console.log("Test DetailModel", detailFromModel) 
-// End Import Model and View
-
-
-
-// exemple recuperation model
-const texttext = text;
-const hello = test();
-console.log(texttext, hello) 
-
+ 
 function DetailPage(props) {
   const { id } = useParams();
 
@@ -51,18 +30,16 @@ function DetailPage(props) {
   const champsDétails = ['Type de terrain', 'Accès en transports', 'Accès handicapé', 'Sanitaires', 'Douches', 'Éclairage', 'Site Web', 'Adresse', 'Département', 'Région', 'Coordonnées GPS', 'Observations'];
 
   const détails = {
-    'Type de terrain': 'Terrain de football',
-    'Accès en transports': 'Oui',
-    'Accès handicapé': 'Oui',
-    'Sanitaires': 'Oui',
-    'Douches': 'Oui',
-    'Éclairage': 'Oui',
-    'Site Web': 'www.paris.fr',
-    'Adresse': '9 Rue Ballu, 75009 Paris',
-    'Département': 'Seine Saint Denis',
-    'Région': 'Île-de-France',
-    'Coordonnées GPS': '48.8798° N, 2.3377° E',
-    'Observations': 'Parc de 1,5 hectares avec un terrain de football, un terrain de basket et un terrain de handball.'
+    'Type de terrain': details.field.place_name, //
+    'Accès en transports': details.field.transport_acces === 1 ? "oui" : "non",
+    'Accès handicapé': details.field.disabled_acces === 1 ? "oui" : "non",
+    'Sanitaires': details.field.sanitary === 1 ? "oui" : "non",
+    'Douches': details.field.shower === 1 ? "oui" : "non",
+    'Éclairage': details.field.lighting === 1 ? "oui" : "non",
+    'Site Web': details.field.web_link === "" ? "Non renseigné" : details.field.web_link,
+    'Adresse': details.adress.adress,
+    'Coordonnées GPS': details.adress.coordinate === "" ? "Non renseigné" : details.adress,
+    'Observations': (details.field.observation_1 === "" && details.field.observation_2 === "") ? "Aucune observation" : details.field.observation_1 + " " + details.field.observation_2, 
   };
 
   return (
