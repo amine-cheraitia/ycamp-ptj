@@ -1,4 +1,10 @@
+// Strat Import Model and View
+// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
+import {test} from "../controllers/ResultController.jsx";
+
+// Import CSs
 import "../styles/ResultPage.scss";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
@@ -6,12 +12,25 @@ import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRe
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Thumbnail from "../components/Thumbnail/Thumbnail";
+import ModalMap from "../components/ModalMap/ModalMap";
+
+
+import {result} from "../models/ResultModel.jsx";
+// exemple recuperation model
+const newResult = result;
+console.log("Test ResultModel", newResult) 
+// End Import Model and View
+
+
+// exemple recuperation model
+const hello = test();
+console.log("Test ResultController", hello) 
+
+
 
 function ResultPage(props) {
   const { id, ids } = useParams();
   const idsArray = JSON.parse(ids);
-
-  const navigate = useNavigate();
 
   const activeFilter = (icon) => {
 
@@ -23,9 +42,17 @@ function ResultPage(props) {
     }
   };
 
+  // Start logic for Card button
+  const navigate = useNavigate();
   const goToDetails = (id) => {
     navigate(`/detail/${id}`);
+    console.log("use");
   };
+  const openModalMap = (id) => {
+    // Add here componant modalMap
+    <ModalMap id={id} />
+  };
+  // End logic for Card button
 
   const buttonFilter = {
     faBus: "Accès en transport",
@@ -47,34 +74,50 @@ function ResultPage(props) {
     {
       id: 1,
       label: "Terrain de foot",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 2,
       label: "Terrain de basket",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 3,
       label: "Terrain de foot",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 4,
       label: "Terrain de basket",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 5,
       label: "Terrain de foot",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 6,
       label: "Terrain de basket",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 7,
       label: "Terrain de foot",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
     {
       id: 8,
       label: "Terrain de basket",
+      latitude: 48.8566 ,
+      longitude: 2.3522,
     },
   ];
 
@@ -107,7 +150,7 @@ function ResultPage(props) {
         <div className="container">
           <div className="grid">
             {terrains.map((terrain) => (
-              <Thumbnail key={terrain.id} label={terrain.label} actionButton={() => goToDetails(terrain.id)} />
+              <Thumbnail key={terrain.id} label={terrain.label} openDetails={() => goToDetails(terrain.id)} openModalMap={() => openModalMap(terrain.id)} />
             ))}
           </div>
 

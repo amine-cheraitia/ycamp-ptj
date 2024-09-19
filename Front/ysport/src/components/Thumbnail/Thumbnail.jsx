@@ -23,8 +23,8 @@ function Thumbnail(props) {
       </div>
 
 <div className="thumbnail-buttons">
-      <Button text="Carte" icon={"faLocationDot"} />
-      <Button text="Détails" icon={"faPlus"} action={props.actionButton} />
+      <Button text="Carte" icon={"faLocationDot"}  action={props.openModalMap} />
+      <Button text="Détails" icon={"faPlus"} action={props.openDetails} />
       </div>
     </div>
   );

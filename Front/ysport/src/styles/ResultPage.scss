@@ -120,7 +120,8 @@
     .container {
       gap: 0;
 
-      height: calc(100vh - 270px);
+      // height: calc(100vh - 270px);
+      height: 100%;
 
       display: flex;
       justify-content: space-around;
@@ -155,7 +156,8 @@
           border: 1px solid rgba(30, 30, 30, 0.25);
           background: #fff;
           box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  
+          margin-bottom: 15px;
+
           button {
             border: none;
             background: none;

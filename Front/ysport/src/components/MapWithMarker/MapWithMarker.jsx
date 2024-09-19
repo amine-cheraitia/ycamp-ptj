@@ -26,11 +26,11 @@ function MapWithMarker(props){
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   // Centrer la carte sur la localisation
-  const center = {
-    lat: props.latitude,
-    lng: props.longitude,
-  };
-
+    const center = {
+      lat: parseFloat(props.latitude),
+      lng: parseFloat(props.longitude),
+    };
+  console.log("Latitude value", typeof(props.latitude))
   // Charge la carte avec le hook useLoadScript
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: my_keyData, // Remplace par ta clé API

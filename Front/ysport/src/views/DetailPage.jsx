@@ -1,10 +1,35 @@
+// Strat Import Model and View
+// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
+import {test, text} from "../controllers/DetailController.jsx";
+
+
+
+// Import CSS
 import "../styles/DetailPage.scss";
+
 import { useParams} from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Button from "../components/Button/Button";
+// import MapWithMarker from "../components/MapWithMarker/MapWithMarker";
+import ModalMap from "../components/ModalMap/ModalMap.jsx";
+
+
+
+import {detail} from "../models/DetailModel.jsx";
+// exemple recuperation model
+const detailFromModel = detail;
+console.log("Test DetailModel", detailFromModel) 
+// End Import Model and View
+
+
+
+// exemple recuperation model
+const texttext = text;
+const hello = test();
+console.log(texttext, hello) 
 
 function DetailPage(props) {
   const { id } = useParams();
@@ -20,6 +45,7 @@ function DetailPage(props) {
       });
   }, [id]);
 
+  console.log("details");
   console.log(details);
 
   const champsDétails = ['Type de terrain', 'Accès en transports', 'Accès handicapé', 'Sanitaires', 'Douches', 'Éclairage', 'Site Web', 'Adresse', 'Département', 'Région', 'Coordonnées GPS', 'Observations'];
@@ -68,6 +94,9 @@ function DetailPage(props) {
                 </div>
               ))}
               </div>
+          </div>
+          <div className="map">
+            <ModalMap latitude="48.8798" longitude="2.3377" place_name="Parc de Paris 9" id_place={id} />
           </div>
         </div>
       </main>
