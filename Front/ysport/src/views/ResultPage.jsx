@@ -1,75 +1,91 @@
-// Strat Import Model and View
-// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
-import {test} from "../controllers/ResultController.jsx";
-
 // Import CSs
 import "../styles/ResultPage.scss";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
+// Import componants
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Thumbnail from "../components/Thumbnail/Thumbnail";
 import ModalMap from "../components/ModalMap/ModalMap";
 
-
-import {result} from "../models/ResultModel.jsx";
-// exemple recuperation model
-const newResult = result;
-console.log("Test ResultModel", newResult) 
-// End Import Model and View
-
-
-// exemple recuperation model
-const hello = test();
-console.log("Test ResultController", hello) 
-
-
-
+// Start Return View
 function ResultPage(props) {
-  const { id, ids } = useParams();
-  const idsArray = JSON.parse(ids);
 
-  const activeFilter = (icon) => {
+  // Type of url sent http://localhost:5173/result?city=1775&fields=[16,12]
 
-    if (document.querySelector(`.${icon}`).classList.contains("active")) {
-      document.querySelector(`.${icon}`).classList.remove("active");
-      return;
-    } else {
-      document.querySelector(`.${icon}`).classList.add("active");
+  const location = useLocation(); // Object with URL
+  const [idLocation, setLoc] = useState(null); // id location
+  const [idsSports, setFields] = useState([]); // List of type of field
+  const typeOfLocation = location.search.split("=")[0].replace("?", "");
+
+  useEffect(() => {
+    // Récupération des query params
+    const searchParams = new URLSearchParams(location.search);
+    // Récupérer la ville et les types de terrain
+    // si city est présent dans les query params, on le récupère
+    // if (searchParams.has("city")) {
+    //   const setLocParm = "city";
+    // }else if (searchParams.has("regions")) {
+    //   const setLocParm = "regions";
+    // }else if (searchParams.has("departements")) {
+    //   const setLocParm = "departements";
+    // }
+    // if(setLocParm){
+    //   setLoc(searchParams.get(setLocParm));
+    // }
+
+    if (searchParams.has("city")) {
+      const cityParam = searchParams.get("city");
+      setLoc(cityParam);
     }
-  };
 
-  // Start logic for Card button
-  const navigate = useNavigate();
-  const goToDetails = (id) => {
-    navigate(`/detail/${id}`);
-    console.log("use");
-  };
-  const openModalMap = (id) => {
-    // Add here componant modalMap
-    <ModalMap id={id} />
-  };
-  // End logic for Card button
+     // si regions est présent dans les query params, on le récupère
+    if (searchParams.has("regions")) {
+      const regionsParam = searchParams.get("regions");
+      setLoc(regionsParam);
+    }
 
-  const buttonFilter = {
-    faBus: "Accès en transport",
-    faWheelchairMove: "Accès handicapé",
-    faShower: "Douches",
-    faRestroom: "Sanitaires",
-    faLightbulb: "Éclairage",
-  };
+    // si departements est présent dans les query params, on le récupère
+    if (searchParams.has("departements")) {
+      const departementsParam = searchParams.get("departements");
+      setLoc(departementsParam);
+    }
+    const fieldsParam = searchParams.get("fields");
 
-  const iconMap = {
-    faBus: faBus,
-    faWheelchairMove: faWheelchairMove,
-    faShower: faShower,
-    faRestroom: faRestroom,
-    faLightbulb: faLightbulb,
-  };
+    if (fieldsParam) {
+      // Les champs peuvent être encodés en string, donc on les transforme en tableau
+      try {
+        const fieldsArray = JSON.parse(fieldsParam);
+        setFields(fieldsArray);
+      } catch (error) {
+        console.error("Erreur lors de l'analyse des champs:", error);
+      }
+    }
+  }, [location]);
 
+  // Fech data from Api
+  // Start Get Sports Type from API
+  // Futur URL endpoint
+  // http://127.0.0.1:8000/api/fields?type_sports_field_id[]=12&city_id=43&type_sports_field_id[]=0
+  let [sportsType, setSportsType] = useState([]);
+  // Connect to Api 
+  const urlToApi = `http://127.0.0.1:8000/api/fieldslist?${typeOfLocation}=${idLocation}&type_sports_field_id=${idsSports[0]}`;
+  console.log("URL to API", urlToApi);
+  useEffect(() => {
+        fetch(urlToApi)
+        .then((response) => response.json())
+        .then((data) => {
+            setSportsType(data)
+        });
+    }, []);
+  // End Get Sport Type from API
+  console.log("My sportsType", sportsType);
+
+  // Array of Result
   const terrains = [
     {
       id: 1,
@@ -120,6 +136,44 @@ function ResultPage(props) {
       longitude: 2.3522,
     },
   ];
+
+  // Filter Button actived logic
+  const activeFilter = (icon) => {
+    if (document.querySelector(`.${icon}`).classList.contains("active")) {
+      document.querySelector(`.${icon}`).classList.remove("active");
+      return;
+    } else {
+      document.querySelector(`.${icon}`).classList.add("active");
+    }
+  };
+
+  // Start logic for Card button
+  const navigate = useNavigate();
+  const goToDetails = (id) => {
+    navigate(`/detail/${id}`);
+    // console.log("use");
+  };
+  const openModalMap = (id) => {
+    // Add here componant modalMap
+    <ModalMap id={id} />
+  };
+  // End logic for Card button
+
+  const buttonFilter = {
+    faBus: "Accès en transport",
+    faWheelchairMove: "Accès handicapé",
+    faShower: "Douches",
+    faRestroom: "Sanitaires",
+    faLightbulb: "Éclairage",
+  };
+
+  const iconMap = {
+    faBus: faBus,
+    faWheelchairMove: faWheelchairMove,
+    faShower: faShower,
+    faRestroom: faRestroom,
+    faLightbulb: faLightbulb,
+  };
 
   return (
     <div className="App">

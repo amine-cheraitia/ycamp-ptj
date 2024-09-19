@@ -3,11 +3,11 @@ import "./Checkbox.scss";
 function Checkbox(props) {
   const label = props.label;
 
-  const dataKey = props.dataKey;
+  const dataKey = props.datakey;
   const action = props.action;
   return (
 
-    <label className="checkbox">
+    <label className="checkbox" key={dataKey}>
       <input type="checkbox" onClick={props.action} />
 
 

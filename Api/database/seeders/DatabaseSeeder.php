@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);*/
 
-        //$this->call(RegionSeeder::class);
-        //$this->call(TypeSportsFieldSeeder::class);
-        //$this->call(DepartmentSeeder::class);
-        //$this->call(CitySeeder::class);
+        $this->call(RegionSeeder::class);
+        $this->call(TypeSportsFieldSeeder::class);
+        $this->call(DepartmentSeeder::class);
+        $this->call(CitySeeder::class);
         $this->call(AdresseSeeder::class);
-        //$this->call(FieldSeeder::class);
+        $this->call(FieldSeeder::class);
     }
 }
