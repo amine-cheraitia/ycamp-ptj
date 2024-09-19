@@ -85,6 +85,13 @@
 
           .label {
             font-size: 14px;
+
+          
+
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100px;
+            text-overflow: ellipsis;
           }
 
           &.active {

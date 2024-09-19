@@ -48,6 +48,10 @@ function HomePage() {
       .then((response) => response.json())
       .then((data) => {
         setSportsType(data);
+        // et on stocke les types de sports dans un fichier json
+        localStorage.setItem("sportsType", JSON.stringify(data));
+        
+
       });
   }, []);
   // End Get Sport Type from API
@@ -57,6 +61,7 @@ function HomePage() {
   const [selectedSportType, setSelectedSportType] = useState([]); // Stocker les types de sport sélectionnés
   const [locId, setLocId] = useState(null); // Stocker l'ID de la localisation sélectionnée
   const [locType, setLocType] = useState(null);
+  const [selectedLoc, setSelectedLoc] = useState(null);
 
   const clickSelectedSportType = (idSportType) => {
     setSelectedSportType((prevState) => {
@@ -98,6 +103,12 @@ function HomePage() {
   const saveLoc = (e, type, id) => {
     setLocId(id);
     setLocType(type+ "_id");
+    setSelectedLoc(e.currentTarget.querySelector("p").textContent);
+
+    // sauvegarder la localisation sélectionnée dans le local storage
+    localStorage.setItem("locId", id);
+    localStorage.setItem("locType", type);
+    localStorage.setItem("selectedLoc", e.currentTarget.querySelector("p").textContent);
 
     // ajouter la classe choose à l'élément cliqué et la retirer des autres
     const items = document.querySelectorAll(".ListeDeroulanteItem");
@@ -139,7 +150,15 @@ function HomePage() {
           <form className="search-bar">
             <div className="type" onClick={openModal}>
               <FontAwesomeIcon icon={faPersonRunning} />
-              <p className="label">Type de terrain</p>
+              <p className="label" title={
+                selectedSportType.length > 0 ? sportsType.filter((sport) => selectedSportType.includes(sport.type_sports_field_id)).map((sport) => sport.type_of_sport_field).join(", ") : "Type de terrain"
+              }>
+                
+                {
+                  selectedSportType.length > 0 ? sportsType.filter((sport) => selectedSportType.includes(sport.type_sports_field_id)).map((sport) => sport.type_of_sport_field).join(", ") : "Type de terrain"
+                }
+
+              </p>
             </div>
             <div className="modal hidden">
               <div className="modal-content">
@@ -159,7 +178,15 @@ function HomePage() {
             <div className="separator"></div>
             <div className="type2" onClick={openModal2}>
               <FontAwesomeIcon icon={faLocationDot} />
-              <p className="label">Ville</p>
+              <p className="label" title={
+                selectedLoc ? selectedLoc : "Localisation"
+              }>
+
+                {
+                  selectedLoc ? selectedLoc : "Localisation"
+                }
+                
+                </p>
             </div>
 
             <div className="modal2 hidden">

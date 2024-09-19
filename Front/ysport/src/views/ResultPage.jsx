@@ -10,51 +10,94 @@ import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRe
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Thumbnail from "../components/Thumbnail/Thumbnail";
-import ModalMap from "../components/ModalMap/ModalMap";
+// import ModalMap from "../components/ModalMap/ModalMap";
 
 // Start Return View
 function ResultPage(props) {
-
   // Type of url sent http://localhost:5173/result?city=1775&fields=[16,12]
+
+  const navigate = useNavigate();
 
   const location = useLocation(); // Object with URL
   const [idLocation, setLoc] = useState(null); // id location
+
+  const [selectedFilter, setSelectedFilter] = useState([]);
+
   const [idsSports, setFields] = useState([]); // List of type of field
+
+  const [page, setPage] = useState(null); // Page number
+
+  const [otherFilters, setOtherFilters] = useState({});
+
   const typeOfLocation = location.search.split("=")[0].replace("?", "");
+
+  // récupération du local storage pour les types de sports
+  const sportsType = JSON.parse(localStorage.getItem("sportsType"));
+
+  // selectedLoc du local storage
+  const selectedLoc = localStorage.getItem("selectedLoc");
 
   useEffect(() => {
     // Récupération des query params
     const searchParams = new URLSearchParams(location.search);
-    // Récupérer la ville et les types de terrain
-    // si city est présent dans les query params, on le récupère
-    // if (searchParams.has("city")) {
-    //   const setLocParm = "city";
-    // }else if (searchParams.has("regions")) {
-    //   const setLocParm = "regions";
-    // }else if (searchParams.has("departements")) {
-    //   const setLocParm = "departements";
-    // }
-    // if(setLocParm){
-    //   setLoc(searchParams.get(setLocParm));
-    // }
 
-    if (searchParams.has("city")) {
-      const cityParam = searchParams.get("city");
+    if (searchParams.has("transport_acces")) {
+      const transportAcces = searchParams.get("transport_acces");
+      setOtherFilters((prevState) => {
+        return { ...prevState, transport_acces: transportAcces };
+      });
+    }
+
+    if (searchParams.has("disabled_acces")) {
+      const disabledAcces = searchParams.get("disabled_acces");
+      setOtherFilters((prevState) => {
+        return { ...prevState, disabled_acces: disabledAcces };
+      });
+    }
+
+    if (searchParams.has("shower")) {
+      const shower = searchParams.get("shower");
+      setOtherFilters((prevState) => {
+        return { ...prevState, shower: shower };
+      });
+    }
+
+    if (searchParams.has("sanitary")) {
+      const sanitary = searchParams.get("sanitary");
+      setOtherFilters((prevState) => {
+        return { ...prevState, sanitary: sanitary };
+      });
+    }
+
+    if (searchParams.has("lighting")) {
+      const lighting = searchParams.get("lighting");
+      setOtherFilters((prevState) => {
+        return { ...prevState, lighting: lighting };
+      });
+    }
+
+    if (searchParams.has("city_id")) {
+      const cityParam = searchParams.get("city_id");
       setLoc(cityParam);
     }
 
-     // si regions est présent dans les query params, on le récupère
-    if (searchParams.has("regions")) {
-      const regionsParam = searchParams.get("regions");
+    // si regions est présent dans les query params, on le récupère
+    if (searchParams.has("region_id")) {
+      const regionsParam = searchParams.get("region_id");
       setLoc(regionsParam);
     }
 
     // si departements est présent dans les query params, on le récupère
-    if (searchParams.has("departements")) {
-      const departementsParam = searchParams.get("departements");
+    if (searchParams.has("departement_id")) {
+      const departementsParam = searchParams.get("departement_id");
       setLoc(departementsParam);
     }
     const fieldsParam = searchParams.get("fields");
+
+    if (searchParams.has("page")) {
+      const pageParam = searchParams.get("page");
+      setPage(pageParam);
+    }
 
     if (fieldsParam) {
       // Les champs peuvent être encodés en string, donc on les transforme en tableau
@@ -70,94 +113,112 @@ function ResultPage(props) {
   // Fech data from Api
   // Start Get Sports Type from API
   // Futur URL endpoint
-  // http://127.0.0.1:8000/api/fields?type_sports_field_id[]=12&city_id=43&type_sports_field_id[]=0
-  let [sportsType, setSportsType] = useState([]);
-  // Connect to Api 
-  const urlToApi = `http://127.0.0.1:8000/api/fieldslist?${typeOfLocation}=${idLocation}&type_sports_field_id=${idsSports[0]}`;
-  console.log("URL to API", urlToApi);
-  useEffect(() => {
-        fetch(urlToApi)
-        .then((response) => response.json())
-        .then((data) => {
-            setSportsType(data)
-        });
-    }, []);
-  // End Get Sport Type from API
-  console.log("My sportsType", sportsType);
 
-  // Array of Result
-  const terrains = [
-    {
-      id: 1,
-      label: "Terrain de foot",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 2,
-      label: "Terrain de basket",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 3,
-      label: "Terrain de foot",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 4,
-      label: "Terrain de basket",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 5,
-      label: "Terrain de foot",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 6,
-      label: "Terrain de basket",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 7,
-      label: "Terrain de foot",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-    {
-      id: 8,
-      label: "Terrain de basket",
-      latitude: 48.8566 ,
-      longitude: 2.3522,
-    },
-  ];
+  let [sportsResults, setSportsResults] = useState([]);
+
+  useEffect(() => {
+    console.log("otherFilters", otherFilters);
+    let urlToApi = `http://127.0.0.1:8000/api/fields?${typeOfLocation}=${idLocation}`;
+
+    if (page) {
+      urlToApi += `&page=${page}`;
+    }
+    // http://127.0.0.1:8000/api/fields?type_sports_field_id[]=12&city_id=43&type_sports_field_id[]=0
+
+    idsSports.forEach((id) => {
+      urlToApi += `&type_sports_field_id[]=${id}`;
+    });
+
+    // Ajout des filtres
+
+    if (otherFilters.transport_acces) {
+      urlToApi += `&transport_acces=${otherFilters.transport_acces === "1" ? true : false}`;
+    }
+
+    if (otherFilters.disabled_acces) {
+      urlToApi += `&disabled_acces=${otherFilters.disabled_acces === "1" ? true : false}`;
+    }
+
+    if (otherFilters.shower) {
+      urlToApi += `&shower=${otherFilters.shower === "1" ? true : false}`;
+    }
+
+    if (otherFilters.sanitary) {
+      urlToApi += `&sanitary=${otherFilters.sanitary === "1" ? true : false}`;
+    }
+
+    if (otherFilters.lighting) {
+      urlToApi += `&lighting=${otherFilters.lighting === "1" ? true : false}`;
+    }
+
+    console.log("urlToApi", urlToApi);
+
+    // Fonction asynchrone pour récupérer les détails
+    const fetchResults = async () => {
+      try {
+        const response = await fetch(urlToApi);
+        const data = await response.json();
+
+        console.log("My data", data);
+
+        // Met à jour les détails dans le state
+        setSportsResults({
+          current_page: data.lol.current_page ? data.lol.current_page : data.current_page,
+          data: data.lol.data ? data.lol.data : data.data,
+          first_page_url: data.lol.first_page_url ? data.lol.first_page_url : data.first_page_url,
+          from: data.lol.from ? data.lol.from : data.from,
+          last_page: data.lol.last_page ? data.lol.last_page : data.last_page,
+          last_page_url: data.lol.last_page_url ? data.lol.last_page_url : data.last_page_url,
+          links: data.lol.links   ? data.lol.links : data.links,
+          next_page_url: data.lol.next_page_url ? data.lol.next_page_url : data.next_page_url,
+          path: data.lol.path ? data.lol.path : data.path,
+          per_page: data.lol.per_page ? data.lol.per_page : data.per_page,
+          prev_page_url: data.lol.prev_page_url ? data.lol.prev_page_url : data.prev_page_url,
+          to: data.lol.to ? data.lol.to : data.to,
+          total: data.lol.total ? data.lol.total : data.total,
+        });
+      } catch (error) {
+        console.error("Erreur lors de la récupération des détails :", error);
+      }
+    };
+
+    fetchResults();
+  }, [idLocation, idsSports, typeOfLocation, page, otherFilters]);
+
+  let minResult = 0;
+  let maxResult = 0;
+
+  if (sportsResults.length === 0) {
+    return <div>Chargement des détails...</div>;
+  } else {
+    minResult = (sportsResults.current_page - 1) * sportsResults.per_page + 1;
+    maxResult =
+      sportsResults.current_page * sportsResults.per_page > sportsResults.total ? sportsResults.total : sportsResults.current_page * sportsResults.per_page;
+  }
+  // End Get Sport Type from API
 
   // Filter Button actived logic
   const activeFilter = (icon) => {
     if (document.querySelector(`.${icon}`).classList.contains("active")) {
       document.querySelector(`.${icon}`).classList.remove("active");
-      return;
+      setSelectedFilter((prevState) => {
+        return prevState.filter((value) => value !== icon);
+      });
     } else {
       document.querySelector(`.${icon}`).classList.add("active");
+      setSelectedFilter((prevState) => {
+        return [...prevState, icon];
+      });
     }
+
+    console.log("My selectedFilter", selectedFilter);
   };
 
   // Start logic for Card button
-  const navigate = useNavigate();
+
   const goToDetails = (id) => {
     navigate(`/detail/${id}`);
-    // console.log("use");
   };
-  const openModalMap = (id) => {
-    // Add here componant modalMap
-    <ModalMap id={id} />
-  };
-  // End logic for Card button
 
   const buttonFilter = {
     faBus: "Accès en transport",
@@ -175,6 +236,41 @@ function ResultPage(props) {
     faLightbulb: faLightbulb,
   };
 
+  const actionFilter = () => {
+    console.log("My selectedFilter", selectedFilter);
+
+
+
+    let query = "";
+
+    if (selectedFilter.includes("faBus")) {
+      console.log("faBus");
+      query += "&transport_acces=1";
+    }
+
+    if (selectedFilter.includes("faWheelchairMove")) {
+      console.log("faWheelchairMove");
+      query += "&disabled_acces=1";
+    }
+
+    if (selectedFilter.includes("faShower")) {
+      console.log("faShower");
+      query += "&shower=1";
+    }
+
+    if (selectedFilter.includes("faRestroom")) {
+      console.log("faRestroom");
+      query += "&sanitary=1";
+    }
+
+    if (selectedFilter.includes("faLightbulb")) {
+      console.log("faLightbulb");
+      query += "&lighting=1";
+    }
+
+    navigate(`/result?${typeOfLocation}=${idLocation}&fields=${JSON.stringify(idsSports)}${query}`);
+  };
+
   return (
     <div className="App">
       <Header />
@@ -183,13 +279,32 @@ function ResultPage(props) {
           <div className="search-bar">
             <div className="type">
               <FontAwesomeIcon icon={faPersonRunning} />
-              <p className="label">Terrain de football</p>
+              <p
+                className="label"
+                title={
+                  idsSports.length > 0
+                    ? sportsType
+                        .filter((sport) => idsSports.includes(sport.type_sports_field_id))
+                        .map((sport) => sport.type_of_sport_field)
+                        .join(", ")
+                    : "Type de terrain"
+                }
+              >
+                {idsSports.length > 0
+                  ? sportsType
+                      .filter((sport) => idsSports.includes(sport.type_sports_field_id))
+                      .map((sport) => sport.type_of_sport_field)
+                      .join(", ")
+                  : "Type de terrain"}
+              </p>
             </div>
 
             <div className="separator"></div>
             <div className="type2">
               <FontAwesomeIcon icon={faLocationDot} />
-              <p className="label">Saint-Denis</p>
+              <p className="label" title={selectedLoc ? selectedLoc : "Localisation"}>
+                {selectedLoc ? selectedLoc : "Localisation"}
+              </p>
             </div>
           </div>
           <div className="filters">
@@ -199,28 +314,52 @@ function ResultPage(props) {
                 <p>{buttonFilter[icon]}</p>
               </div>
             ))}
+
+            <div className="filter-button">
+              <button onClick={actionFilter}>Rechercher</button>
+            </div>
           </div>
         </div>
         <div className="container">
           <div className="grid">
-            {terrains.map((terrain) => (
-              <Thumbnail key={terrain.id} label={terrain.label} openDetails={() => goToDetails(terrain.id)} openModalMap={() => openModalMap(terrain.id)} />
-            ))}
+            {sportsResults.data.length === 0 ? (
+              <div>Aucun résultat</div>
+            ) : (
+              sportsResults.data.map((terrain) => (
+                <Thumbnail
+                  key={terrain.id}
+                  dataKey={terrain.id}
+                  typeField={sportsType
+                    .filter((sport) => sport.type_sports_field_id === parseInt(terrain.type_sports_field_id))
+                    .map((sport) => sport.type_of_sport_field)}
+                  label={terrain.place_name}
+                  ground={terrain.ground_type}
+                  openDetails={() => goToDetails(terrain.id)}
+                />
+              ))
+            )}
           </div>
 
           <div className="footer">
             <div className="results">
-              <p>1 - 8 sur 32 résultats</p>
+              <p>
+                {minResult} - {maxResult} sur {sportsResults.total} résultats
+              </p>
             </div>
             <div className="pagination">
-              <button>1</button>
-              <button>2</button>
-              <button>3</button>
-              <button>4</button>
-              <button>5</button>
+              {sportsResults.links
+                .filter((link) => link.url !== null)
+                .map((link, index) => (
+                  <button
+                    key={index}
+                    className={link.active ? "active" : ""}
+                    onClick={() => navigate(`/result?${typeOfLocation}=${idLocation}&fields=${JSON.stringify(idsSports)}&page=${link.label}`)}
+                  >
+                    {<div dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  </button>
+                ))}
             </div>
-            <div className="results">
-              </div>
+            <div className="results"></div>
           </div>
         </div>
       </main>

@@ -44,6 +44,8 @@ function DetailPage(props) {
   // Si les détails ne sont pas encore chargés, afficher un message de chargement
   if (!details) {
     return <div>Chargement des détails...</div>;
+  } else {
+    console.log("My details", details);
   }
 
   const champsDétails = [
@@ -91,7 +93,7 @@ function DetailPage(props) {
           <div className="description">
             <div className="header">
               <div className="name">Parc de Paris 9</div>
-              <Button text="Carte" icon={"faLocationDot"} />
+              {/* <Button text="Carte" icon={"faLocationDot"} /> */}
             </div>
             <div className="details">
               {champsDétails.map((champ) => (
