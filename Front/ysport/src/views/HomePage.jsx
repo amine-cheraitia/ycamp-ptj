@@ -97,7 +97,7 @@ function HomePage() {
 
   const saveLoc = (e, type, id) => {
     setLocId(id);
-    setLocType(type);
+    setLocType(type+ "_id");
 
     // ajouter la classe choose à l'élément cliqué et la retirer des autres
     const items = document.querySelectorAll(".ListeDeroulanteItem");
