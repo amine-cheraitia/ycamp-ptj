@@ -108,7 +108,7 @@ function HomePage() {
     console.log(e.target.value);
 
     setFilteredVilles(
-      Object.keys(villes).filter((ville) => {
+      Object.keys(filteredVilles).filter((ville) => {
         return ville.toLowerCase().startsWith(e.target.value.toLowerCase());
       })
     );

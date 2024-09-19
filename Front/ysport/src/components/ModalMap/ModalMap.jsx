@@ -2,8 +2,6 @@ import "./ModalMap.scss";
 import MapWithMarker from "../MapWithMarker/MapWithMarker"
 import Button from "../Button/Button"
 
-
-
 function ModalMap(props) {
     return (
         <div className="backGroundModal">
