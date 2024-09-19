@@ -5,7 +5,8 @@ import {test} from "../controllers/ResultController.jsx";
 // Import CSs
 import "../styles/ResultPage.scss";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,8 +30,56 @@ console.log("Test ResultController", hello)
 
 
 function ResultPage(props) {
-  const { id, ids } = useParams();
-  const idsArray = JSON.parse(ids);
+
+  // http://localhost:5173/result?city=1775&fields=[16,12]
+
+  const location = useLocation();
+  const [loc, setLoc] = useState(null);
+  const [fields, setFields] = useState([]);
+  const type = location.search.split("=")[0].replace("?", "");
+
+
+  useEffect(() => {
+    // Récupération des query params
+    const searchParams = new URLSearchParams(location.search);
+
+    // Récupérer la ville et les types de terrain
+
+    // si city est présent dans les query params, on le récupère
+    if (searchParams.has("city")) {
+      const cityParam = searchParams.get("city");
+      setLoc(cityParam);
+    }
+
+
+     // si regions est présent dans les query params, on le récupère
+    if (searchParams.has("regions")) {
+      const regionsParam = searchParams.get("regions");
+      setLoc(regionsParam);
+    }
+
+    // si departements est présent dans les query params, on le récupère
+    if (searchParams.has("departements")) {
+      const departementsParam = searchParams.get("departements");
+      setLoc(departementsParam);
+    }
+    const fieldsParam = searchParams.get("fields");
+
+    
+
+    if (fieldsParam) {
+      // Les champs peuvent être encodés en string, donc on les transforme en tableau
+      try {
+        const fieldsArray = JSON.parse(fieldsParam);
+        setFields(fieldsArray);
+      } catch (error) {
+        console.error("Erreur lors de l'analyse des champs:", error);
+      }
+    }
+  }, [location]);
+
+  console.log("loc", loc);
+  console.log("fields", fields);
 
   const activeFilter = (icon) => {
 

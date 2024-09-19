@@ -6,33 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faPersonRunning, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
-
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
 import Footer from "../components/Footer/Footer";
 import Checkbox from "../components/Checkbox/Checkbox";
 
-// Strat Import Model and View
-// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
-import {test} from "../controllers/HomeController.jsx";
-
-import {villes} from "../models/HomeModel.jsx";
-
-
-// exemple recuperation model
-const hello = test();
-console.log("Test HomeController", hello) 
-
-
-// exemple recuperation model
-const newVilles = villes;
-console.log("Test HomeModel", newVilles) 
-// End Import Model and View
-
-
-
 function HomePage() {
-
   const openModal = () => {
     if (document.querySelector(".modal").classList.contains("hidden")) {
       document.querySelector(".modal").classList.remove("hidden");
@@ -61,63 +40,91 @@ function HomePage() {
     }
   };
 
-  const navigate = useNavigate();
-
-  // function to send Url to next page
-  const resultPage = () => {
-    const id = 123;
-    const ids = selectedSportType;
-    navigate(`/result/${id}/${JSON.stringify(ids)}`);
-  };
-
   // Start Get Sports Type from API
   let [sportsType, setSportsType] = useState([]);
   // Connect to Api
   useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/typesportsfield")
-        .then((response) => response.json())
-        .then((data) => {
-            setSportsType(data)
-        });
-    }, []);
+    fetch("http://127.0.0.1:8000/api/typesportsfield")
+      .then((response) => response.json())
+      .then((data) => {
+        setSportsType(data);
+      });
+  }, []);
   // End Get Sport Type from API
 
   // Start Make table of selected sports
-  // Function to redefine array
-  function recreateArray(arr, ignoreValue) {
-    return arr.filter(function(value) {
-        return value !== ignoreValue;
-    });
-  }
 
-  let selectedSportType = [];
-  const setSelectedSportType = (idSportType) => {
-    if(selectedSportType.includes(idSportType)){
-      selectedSportType = recreateArray(selectedSportType, idSportType)
-      console.log("Remove", selectedSportType);
-    }else{
-      selectedSportType.push(idSportType);
-      console.log("Add", selectedSportType);
-    }
+  const [selectedSportType, setSelectedSportType] = useState([]); // Stocker les types de sport sélectionnés
+  const [locId, setLocId] = useState(null); // Stocker l'ID de la localisation sélectionnée
+  const [locType, setLocType] = useState(null);
+
+  const clickSelectedSportType = (idSportType) => {
+    setSelectedSportType((prevState) => {
+      if (prevState.includes(idSportType)) {
+        return prevState.filter((value) => value !== idSportType);
+      } else {
+        return [...prevState, idSportType];
+      }
+    });
+
   };
   // End Make table of selected sports
 
+  const [localisations, setLocalisations] = useState([]);
+  const [query, setQuery] = useState("");
 
-
-  const [filteredVilles, setFilteredVilles] = useState(Object.keys(villes));
-
-  // console.log("filter", filteredVilles);
+  useEffect(() => {
+    if (query.length >= 3) {
+      fetch(`http://127.0.0.1:8000/api/location?query=${query}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setLocalisations([]);
+          const cities = (data.cities || []).map((city) => ({ ...city, type: "city" }));
+          const regions = (data.regions || []).map((region) => ({ ...region, type: "region" }));
+          const departments = (data.departments || []).map((department) => ({ ...department, type: "department" }));
+          const combinedLocalisations = [...cities, ...regions, ...departments];
+          setLocalisations(combinedLocalisations);
+        })
+        .catch((error) => console.error("Erreur lors de l'appel à l'API:", error));
+    } else {
+      setLocalisations([]);
+    }
+  }, [query]);
 
   const searchLoc = (e) => {
-    console.log(e.target.value);
+    setQuery(e.target.value);
+  };
 
-    setFilteredVilles(
-      Object.keys(filteredVilles).filter((ville) => {
-        return ville.toLowerCase().startsWith(e.target.value.toLowerCase());
-      })
-    );
+  const saveLoc = (e, type, id) => {
+    setLocId(id);
+    setLocType(type+ "_id");
 
-    console.log(filteredVilles);
+    // ajouter la classe choose à l'élément cliqué et la retirer des autres
+    const items = document.querySelectorAll(".ListeDeroulanteItem");
+    items.forEach((item) => {
+      item.classList.remove("choose");
+    });
+
+    e.currentTarget.classList.add("choose");
+
+  };
+
+  const navigate = useNavigate();
+
+  // function to send Url to next page
+  const resultPage = () => {
+    const ids = selectedSportType;
+
+    if (locId === null || locType === null) {
+      alert("Veuillez choisir une ville");
+      return;
+    }
+
+    if (ids.length === 0) {
+      alert("Veuillez choisir un type de terrain");
+      return;
+    }
+    navigate(`/result?${locType}=${locId}&fields=${JSON.stringify(ids)}`);
   };
 
   return (
@@ -137,9 +144,15 @@ function HomePage() {
             <div className="modal hidden">
               <div className="modal-content">
                 <div className="col1">
-                  {sportsType && sportsType.map((sport, index) => (
-                    <Checkbox dataKey={sport.type_sports_field_id} label={sport.type_of_sport_field} action={() => setSelectedSportType(sport.type_sports_field_id)} />
-                  ))}
+                  {sportsType &&
+                    sportsType.map((sport, index) => (
+                      <Checkbox
+                        key={sport.type_sports_field_id}
+                        dataKey={sport.type_sports_field_id}
+                        label={sport.type_of_sport_field}
+                        action={() => clickSelectedSportType(sport.type_sports_field_id)}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
@@ -154,10 +167,10 @@ function HomePage() {
                 <input type="text" onChange={(e) => searchLoc(e)} placeholder="Rechercher une ville, une région..." />
                 <div className="ListeDeroulante">
                   <div className="ListeDeroulanteContent">
-                    {filteredVilles.map((ville, index) => (
-                      <div className="ListeDeroulanteItem" key={index}>
-                        <p>{ville}</p>
-                        {index !== filteredVilles.length - 1 && <div className="spaceLine"></div>}
+                    {localisations.map((loc, index) => (
+                      <div className="ListeDeroulanteItem" key={loc.id} data-key={loc.id} onClick={(e) => saveLoc(e, loc.type, loc.id)}>
+                        <p>{loc.type === "city" ? loc.city_name : loc.type === "region" ? loc.region_name : loc.department_name}</p>
+                        {index !== localisations.length - 1 && <div className="spaceLine"></div>}
                       </div>
                     ))}
                   </div>

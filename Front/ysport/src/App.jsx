@@ -9,7 +9,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/result/:id/:ids" element={<ResultPage />} />
+
+      {/* http://localhost:5173/result?city=4303&[0,10,12]*/ }
+      <Route path="/result" element={<ResultPage />} />
+      {/* <Route path="/result?:locType=:locId&:ids" element={<ResultPage />} /> */}
       <Route path="/detail/:id" element={<DetailPage />} />
       <Route path="/contact" element={<ContactPage />} />
 
