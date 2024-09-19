@@ -5,7 +5,8 @@ import {test} from "../controllers/ResultController.jsx";
 // Import CSs
 import "../styles/ResultPage.scss";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,8 +30,39 @@ console.log("Test ResultController", hello)
 
 
 function ResultPage(props) {
-  const { id, ids } = useParams();
-  const idsArray = JSON.parse(ids);
+
+  // http://localhost:5173/result?city=1775&fields=[16,12]
+
+  const location = useLocation();
+  const [city, setCity] = useState(null);
+  const [fields, setFields] = useState([]);
+
+
+  useEffect(() => {
+    // Récupération des query params
+    const searchParams = new URLSearchParams(location.search);
+
+    // Récupérer la ville et les types de terrain
+    const cityParam = searchParams.get("city");
+    const fieldsParam = searchParams.get("fields");
+
+    if (cityParam) {
+      setCity(cityParam);
+    }
+
+    if (fieldsParam) {
+      // Les champs peuvent être encodés en string, donc on les transforme en tableau
+      try {
+        const fieldsArray = JSON.parse(fieldsParam);
+        setFields(fieldsArray);
+      } catch (error) {
+        console.error("Erreur lors de l'analyse des champs:", error);
+      }
+    }
+  }, [location]);
+
+  console.log("city", city);
+  console.log("fields", fields);
 
   const activeFilter = (icon) => {
 
