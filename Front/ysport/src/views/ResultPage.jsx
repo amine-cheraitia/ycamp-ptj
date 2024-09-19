@@ -1,9 +1,8 @@
 // Import CSs
 import "../styles/ResultPage.scss";
 
-// Import Librairies
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,30 +15,46 @@ import ModalMap from "../components/ModalMap/ModalMap";
 // Start Return View
 function ResultPage(props) {
 
-  // // Get Params From Url
-  // const idsArray = useParams();
-  // const idLocation = parseInt(idsArray["id"]);
-  // const idsSports = JSON.parse(idsArray["ids"]);
+  // Type of url sent http://localhost:5173/result?city=1775&fields=[16,12]
 
-  ///////////////////////
-  // Pauline Dinguerie //
-  ///////////////////////
-  const location = useLocation();
-  const [city, setCity] = useState(null);
-  const [fields, setFields] = useState([]);
-
+  const location = useLocation(); // Object with URL
+  const [idLocation, setLoc] = useState(null); // id location
+  const [idsSports, setFields] = useState([]); // List of type of field
+  const typeOfLocation = location.search.split("=")[0].replace("?", "");
 
   useEffect(() => {
     // Récupération des query params
     const searchParams = new URLSearchParams(location.search);
-
     // Récupérer la ville et les types de terrain
-    const cityParam = searchParams.get("city");
-    const fieldsParam = searchParams.get("fields");
+    // si city est présent dans les query params, on le récupère
+    // if (searchParams.has("city")) {
+    //   const setLocParm = "city";
+    // }else if (searchParams.has("regions")) {
+    //   const setLocParm = "regions";
+    // }else if (searchParams.has("departements")) {
+    //   const setLocParm = "departements";
+    // }
+    // if(setLocParm){
+    //   setLoc(searchParams.get(setLocParm));
+    // }
 
-    if (cityParam) {
-      setCity(cityParam);
+    if (searchParams.has("city")) {
+      const cityParam = searchParams.get("city");
+      setLoc(cityParam);
     }
+
+     // si regions est présent dans les query params, on le récupère
+    if (searchParams.has("regions")) {
+      const regionsParam = searchParams.get("regions");
+      setLoc(regionsParam);
+    }
+
+    // si departements est présent dans les query params, on le récupère
+    if (searchParams.has("departements")) {
+      const departementsParam = searchParams.get("departements");
+      setLoc(departementsParam);
+    }
+    const fieldsParam = searchParams.get("fields");
 
     if (fieldsParam) {
       // Les champs peuvent être encodés en string, donc on les transforme en tableau
@@ -52,17 +67,13 @@ function ResultPage(props) {
     }
   }, [location]);
 
-
-
-
-
   // Fech data from Api
   // Start Get Sports Type from API
   // Futur URL endpoint
   // http://127.0.0.1:8000/api/fields?type_sports_field_id[]=12&city_id=43&type_sports_field_id[]=0
   let [sportsType, setSportsType] = useState([]);
-  // Connect to Api
-  const urlToApi = `http://127.0.0.1:8000/api/fieldslist?region_id=${idLocation}&type_sports_field_id=${idsSports[0]}`;
+  // Connect to Api 
+  const urlToApi = `http://127.0.0.1:8000/api/fieldslist?${typeOfLocation}=${idLocation}&type_sports_field_id=${idsSports[0]}`;
   console.log("URL to API", urlToApi);
   useEffect(() => {
         fetch(urlToApi)
