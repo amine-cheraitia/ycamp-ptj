@@ -26,31 +26,20 @@ function ResultPage(props) {
     // Récupération des query params
     const searchParams = new URLSearchParams(location.search);
     // Récupérer la ville et les types de terrain
-    // si city est présent dans les query params, on le récupère
-    // if (searchParams.has("city")) {
-    //   const setLocParm = "city";
-    // }else if (searchParams.has("regions")) {
-    //   const setLocParm = "regions";
-    // }else if (searchParams.has("departements")) {
-    //   const setLocParm = "departements";
-    // }
-    // if(setLocParm){
-    //   setLoc(searchParams.get(setLocParm));
-    // }
 
-    if (searchParams.has("city")) {
+    if (searchParams.has("city_id")) {
       const cityParam = searchParams.get("city");
       setLoc(cityParam);
     }
 
      // si regions est présent dans les query params, on le récupère
-    if (searchParams.has("regions")) {
+    if (searchParams.has("region_id")) {
       const regionsParam = searchParams.get("regions");
       setLoc(regionsParam);
     }
 
     // si departements est présent dans les query params, on le récupère
-    if (searchParams.has("departements")) {
+    if (searchParams.has("departement_id")) {
       const departementsParam = searchParams.get("departements");
       setLoc(departementsParam);
     }
