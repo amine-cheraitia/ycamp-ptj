@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adresse;
 use App\Models\Field;
 use Illuminate\Http\Request;
 
@@ -198,7 +199,7 @@ class FieldController extends Controller
 
     public function getFieldListWithFilter(Request $request)
     {
-        $typeSportsFieldId = $request->type_sports_field_id;
+        $typeSportsFieldIds = $request->type_sports_field_id;
         $regionId = $request->region_id;
         $departmentId = $request->department_id;
         $cityId = $request->city_id;
@@ -268,10 +269,9 @@ class FieldController extends Controller
 
     public function getFieldDetail($id)
     {
-        $field = Field::findOrFail($id);
-
-        // Retourner une réponse JSON avec les détails du champ
-        return response()->json($field);
+        //$field = Field::with('adresse')->findOrFail($id);
+        $field = Field::with('adresse')->findOrFail($id);
+        $add = Adresse::findOrFail($field->adresse_id);
+        return response()->json(['field' => $field, 'adress' => $add]);
     }
 }
-
