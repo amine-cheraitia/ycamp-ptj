@@ -1,14 +1,6 @@
 // Strat Import Model and View
 // Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
 import {test} from "../controllers/ResultController.jsx";
-// exemple recuperation model
-const hello = test();
-console.log("Test ResultController", hello) 
-import {result} from "../models/ResultModel.jsx";
-// exemple recuperation model
-const newResult = result;
-console.log("Test ResultModel", newResult) 
-// End Import Model and View
 
 // Import CSs
 import "../styles/ResultPage.scss";
@@ -21,6 +13,20 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Thumbnail from "../components/Thumbnail/Thumbnail";
 import ModalMap from "../components/ModalMap/ModalMap";
+
+
+import {result} from "../models/ResultModel.jsx";
+// exemple recuperation model
+const newResult = result;
+console.log("Test ResultModel", newResult) 
+// End Import Model and View
+
+
+// exemple recuperation model
+const hello = test();
+console.log("Test ResultController", hello) 
+
+
 
 function ResultPage(props) {
   const { id, ids } = useParams();

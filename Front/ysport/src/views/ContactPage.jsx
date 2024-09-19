@@ -1,15 +1,7 @@
 // Strat Import Model and View
 // Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
 import {test, text} from "../controllers/ContactController.jsx";
-// exemple recuperation model
-const texttext = text;
-const hello = test();
-console.log(texttext, hello) 
-import {contact} from "../models/ContactModel.jsx";
-// exemple recuperation model
-const contactFromModel = contact;
-console.log("Test ContactModel", contactFromModel) 
-// End Import Model and View
+
 
 // Import CSS
 import "../styles/ContactPage.scss";
@@ -19,6 +11,20 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import PhotoGallery from "../components/PhotoGallery";
 
+
+import {contact} from "../models/ContactModel.jsx";
+// exemple recuperation model
+const contactFromModel = contact;
+console.log("Test ContactModel", contactFromModel) 
+// End Import Model and View
+
+
+
+
+// exemple recuperation model
+const texttext = text;
+const hello = test();
+console.log(texttext, hello) 
 
 
 function ContactPage(props) {

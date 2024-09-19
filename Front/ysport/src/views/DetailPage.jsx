@@ -1,15 +1,8 @@
 // Strat Import Model and View
 // Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
 import {test, text} from "../controllers/DetailController.jsx";
-// exemple recuperation model
-const texttext = text;
-const hello = test();
-console.log(texttext, hello) 
-import {detail} from "../models/DetailModel.jsx";
-// exemple recuperation model
-const detailFromModel = detail;
-console.log("Test DetailModel", detailFromModel) 
-// End Import Model and View
+
+
 
 // Import CSS
 import "../styles/DetailPage.scss";
@@ -22,6 +15,21 @@ import Footer from "../components/Footer/Footer";
 import Button from "../components/Button/Button";
 // import MapWithMarker from "../components/MapWithMarker/MapWithMarker";
 import ModalMap from "../components/ModalMap/ModalMap.jsx";
+
+
+
+import {detail} from "../models/DetailModel.jsx";
+// exemple recuperation model
+const detailFromModel = detail;
+console.log("Test DetailModel", detailFromModel) 
+// End Import Model and View
+
+
+
+// exemple recuperation model
+const texttext = text;
+const hello = test();
+console.log(texttext, hello) 
 
 function DetailPage(props) {
   const { id } = useParams();
