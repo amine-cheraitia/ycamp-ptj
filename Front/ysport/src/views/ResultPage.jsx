@@ -1,75 +1,80 @@
-// Strat Import Model and View
-// Mettre toutes les variables ou les fonctions dans le crochet, separé par des virgules
-import {test} from "../controllers/ResultController.jsx";
-
 // Import CSs
 import "../styles/ResultPage.scss";
 
+// Import Librairies
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faLocationDot, faBus, faWheelchairMove, faShower, faRestroom, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
+// Import componants
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Thumbnail from "../components/Thumbnail/Thumbnail";
 import ModalMap from "../components/ModalMap/ModalMap";
 
-
-import {result} from "../models/ResultModel.jsx";
-// exemple recuperation model
-const newResult = result;
-console.log("Test ResultModel", newResult) 
-// End Import Model and View
-
-
-// exemple recuperation model
-const hello = test();
-console.log("Test ResultController", hello) 
-
-
-
+// Start Return View
 function ResultPage(props) {
-  const { id, ids } = useParams();
-  const idsArray = JSON.parse(ids);
 
-  const activeFilter = (icon) => {
+  // // Get Params From Url
+  // const idsArray = useParams();
+  // const idLocation = parseInt(idsArray["id"]);
+  // const idsSports = JSON.parse(idsArray["ids"]);
 
-    if (document.querySelector(`.${icon}`).classList.contains("active")) {
-      document.querySelector(`.${icon}`).classList.remove("active");
-      return;
-    } else {
-      document.querySelector(`.${icon}`).classList.add("active");
+  ///////////////////////
+  // Pauline Dinguerie //
+  ///////////////////////
+  const location = useLocation();
+  const [city, setCity] = useState(null);
+  const [fields, setFields] = useState([]);
+
+
+  useEffect(() => {
+    // Récupération des query params
+    const searchParams = new URLSearchParams(location.search);
+
+    // Récupérer la ville et les types de terrain
+    const cityParam = searchParams.get("city");
+    const fieldsParam = searchParams.get("fields");
+
+    if (cityParam) {
+      setCity(cityParam);
     }
-  };
 
-  // Start logic for Card button
-  const navigate = useNavigate();
-  const goToDetails = (id) => {
-    navigate(`/detail/${id}`);
-    console.log("use");
-  };
-  const openModalMap = (id) => {
-    // Add here componant modalMap
-    <ModalMap id={id} />
-  };
-  // End logic for Card button
+    if (fieldsParam) {
+      // Les champs peuvent être encodés en string, donc on les transforme en tableau
+      try {
+        const fieldsArray = JSON.parse(fieldsParam);
+        setFields(fieldsArray);
+      } catch (error) {
+        console.error("Erreur lors de l'analyse des champs:", error);
+      }
+    }
+  }, [location]);
 
-  const buttonFilter = {
-    faBus: "Accès en transport",
-    faWheelchairMove: "Accès handicapé",
-    faShower: "Douches",
-    faRestroom: "Sanitaires",
-    faLightbulb: "Éclairage",
-  };
 
-  const iconMap = {
-    faBus: faBus,
-    faWheelchairMove: faWheelchairMove,
-    faShower: faShower,
-    faRestroom: faRestroom,
-    faLightbulb: faLightbulb,
-  };
 
+
+
+  // Fech data from Api
+  // Start Get Sports Type from API
+  // Futur URL endpoint
+  // http://127.0.0.1:8000/api/fields?type_sports_field_id[]=12&city_id=43&type_sports_field_id[]=0
+  let [sportsType, setSportsType] = useState([]);
+  // Connect to Api
+  const urlToApi = `http://127.0.0.1:8000/api/fieldslist?region_id=${idLocation}&type_sports_field_id=${idsSports[0]}`;
+  console.log("URL to API", urlToApi);
+  useEffect(() => {
+        fetch(urlToApi)
+        .then((response) => response.json())
+        .then((data) => {
+            setSportsType(data)
+        });
+    }, []);
+  // End Get Sport Type from API
+  console.log("My sportsType", sportsType);
+
+  // Array of Result
   const terrains = [
     {
       id: 1,
@@ -120,6 +125,44 @@ function ResultPage(props) {
       longitude: 2.3522,
     },
   ];
+
+  // Filter Button actived logic
+  const activeFilter = (icon) => {
+    if (document.querySelector(`.${icon}`).classList.contains("active")) {
+      document.querySelector(`.${icon}`).classList.remove("active");
+      return;
+    } else {
+      document.querySelector(`.${icon}`).classList.add("active");
+    }
+  };
+
+  // Start logic for Card button
+  const navigate = useNavigate();
+  const goToDetails = (id) => {
+    navigate(`/detail/${id}`);
+    // console.log("use");
+  };
+  const openModalMap = (id) => {
+    // Add here componant modalMap
+    <ModalMap id={id} />
+  };
+  // End logic for Card button
+
+  const buttonFilter = {
+    faBus: "Accès en transport",
+    faWheelchairMove: "Accès handicapé",
+    faShower: "Douches",
+    faRestroom: "Sanitaires",
+    faLightbulb: "Éclairage",
+  };
+
+  const iconMap = {
+    faBus: faBus,
+    faWheelchairMove: faWheelchairMove,
+    faShower: faShower,
+    faRestroom: faRestroom,
+    faLightbulb: faLightbulb,
+  };
 
   return (
     <div className="App">
