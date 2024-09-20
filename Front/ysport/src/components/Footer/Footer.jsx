@@ -4,12 +4,12 @@ function Footer() {
   return (
     <footer className="App-footer">
       <div className="left">
-        <p>© 2024 FranceTerrainsDeSport. Tous droits réservés.</p>
+        <p>© 2024 <strong>Proxima Sport</strong> | Tous droits réservés</p>
       </div>
       <div className="right">
         <p>
-          Projet réalisé par Amine, Maximilien, Pauline, Quentin et Sara dans le
-          cadre de Ynov Campus – YCamp.
+          Projet réalisé par <strong>Amine</strong>, <strong>Maximilien</strong>, <strong>Pauline</strong>, <strong>Quentin</strong> et <strong>Sara</strong> dans le
+          cadre de <strong>Ynov Campus YCamp</strong>.
         </p>
       </div>
     </footer>

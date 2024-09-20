@@ -38,15 +38,15 @@ function ContactPage(props) {
             <h1>Contactez-nous !</h1>
             <form>
               <div className="form-group">
-                <label htmlFor="name">Nom</label>
+                <label htmlFor="name">Nom :</label>
                 <input type="text" id="name" name="name" />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email :</label>
                 <input type="email" id="email" name="email" />
               </div>
               <div className="form-group">
-                <label htmlFor="message">Message</label>
+                <label htmlFor="message">Message :</label>
                 <textarea id="message" name="message" />
               </div>
               <button type="submit">Envoyer</button>
